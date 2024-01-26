@@ -1,9 +1,66 @@
-  <div class="row bg-dark text-center">
-    <div class="col-md-6">
+  <div class="p-0 m-0 bg-dark">
+   <div class="container">
+    <div class="row text-center">
+    <div class="col-md-12 py-5">
     <div class=" text-end triangle-topright"></div>
       <h1 class="fw-bolder">ACADEMY</h1>
-      <h2>Where learn is made simple.</h2>
+      <h2>Where <span>learn</span> is made simple.</h2>
       <div class="triangle-bottomleft"></div>
     </div>
-    <div class="col-md-6"></div>
+    <div class="col-md-12 py-5"></div>
+    <div class="col-md-12">
+      <p class="fs-1 py-5">We train people all around the world!</p>
+            <div id="earth" class="m-auto"></div>
+            <p class="py-5 fs-5">Supporting over 100 languages</p>
+</div>
+<div class="col-md-4 p-3 text-center">
+  <div class="rounded shadow p-3">
+<h2>Our mission</h2>
+<p class="fs-3">To train new talents and let they become the absoulte bests at what they do !
+</p>
   </div>
+</div>
+<div class="col-md-4 p-3 text-center">
+  <div class="rounded shadow p-3">
+<h2>Our offer</h2>
+<p class="fs-3">
+ We offer more than 2000 courses on the latest technologies ,each one has its own price.
+</p>
+  </div>
+</div>
+<div class="col-md-4 p-3 text-center">
+  <div class="rounded shadow p-3">
+<h2>From your home</h2>
+<p class="fs-3">
+We are 100% remote company, giving you the chance to study and learn from the place you like the most. </p>
+  </div>
+</div>
+<div class="col-md-12 py-5"></div>
+<div class="col-md-6 py-5" style="line-height: 1.5;">
+<h1>Train yourself to be the best you can be!</h1>
+<p class="py-4 fs-2">With more than 2000 courses, you can choose technologies like blockchain, AI, Machine Learning, Cloud Data, Cybersecurity.</p>
+</div>
+<div class="col-md-6 py-3">
+<img src="assets/home-images/vertical.webp" alt="" class="w-75 rounded m-auto shadow" [style.max-height]="'500px'">
+</div>
+<div class="col-md-12 py-5">
+  <div class="py-5">
+ <div class="border rounded p-5 shadow">
+    <h1 class="text-white"> 100,000 +</h1>
+    <p class="fs-2">students chose us every month.</p>
+  </div>
+  </div>
+</div>
+<div class="col-md-12 py-5">
+  <h1>Companies that have chosen us</h1>
+</div>
+<div class="col-md-4 col-lg-3 py-5" *ngFor="let c of companies">
+  <div class="p-3">
+    <div class="rounded border p-3 bg-white">
+      <img src="{{c}}" alt="" class="w-100" style="height:180px;">
+    </div>
+  </div>
+</div>
+  </div>
+  </div>
+</div>

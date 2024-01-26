@@ -19,7 +19,7 @@ import { CorsiComponent } from './components/corsi/corsi.component';
     ConfermaComponent,
     ShowCorsoComponent,
     NotfoundComponent,
-    CorsiComponent
+
   ],
   imports: [
     BrowserModule,
