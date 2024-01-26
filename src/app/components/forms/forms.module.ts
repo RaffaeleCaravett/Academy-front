@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsComponent } from './forms.component';
 import { FormsRoutingModule } from './forms-routing.module';
+import { AppComponent } from 'src/app/app.component';
 
 
 @NgModule({
@@ -14,6 +15,6 @@ import { FormsRoutingModule } from './forms-routing.module';
     FormsRoutingModule
   ],
   providers: [],
-  bootstrap: [FormsComponent]
+  bootstrap: [AppComponent]
 })
 export class FormsModule { }
