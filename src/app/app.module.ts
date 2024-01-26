@@ -9,6 +9,7 @@ import { ConfermaComponent } from './components/conferma/conferma.component';
 import { ShowCorsoComponent } from './shared/show-corso/show-corso.component';
 import { NotfoundComponent } from './shared/notfound/notfound.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CorsiComponent } from './components/corsi/corsi.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FooterComponent,
     ConfermaComponent,
     ShowCorsoComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    CorsiComponent
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,9 @@ const routes: Routes = [
 {
   path:'riservato',
    loadChildren: () => import('../app/components/riservato/riservato.module').then(m => m.RiservatoModule)},
+   {
+    path:'corsi',
+     loadChildren: () => import('../app/components/corsi/corsi.module').then(m => m.CorsiModule)},
 {
   path:'conferma',
   component:ConfermaComponent

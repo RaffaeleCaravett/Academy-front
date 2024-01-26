@@ -1,7 +1,15 @@
-<nav class="p-4">
-<div class="row fs-4 text-success">
-  <div class="col-md-3">Home</div>
-  <div class="col-md-3">Courses</div>
-  <div class="col-md-3">Dashboard</div>
-  <div class="col-md-3">Reserved</div>
+<nav class="p-4 bg-dark">
+<div class="row fs-4 text-center">
+  <div class="col-md-3">
+    <button class="btn fs-4" [routerLink]="'/home'">
+    Home</button></div>
+  <div class="col-md-3">
+    <button class="btn fs-4" [routerLink]="'/corsi'">
+    Courses</button></div>
+  <div class="col-md-3">
+    <button class="btn fs-4" [routerLink]="['/profilo',user?.id]">
+    Dashboard</button></div>
+  <div class="col-md-3">
+    <button class="btn fs-4" [routerLink]="'/riservato'">
+    Reserved</button></div>
 </div></nav>
