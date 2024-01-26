@@ -78,7 +78,6 @@ img:hover{
 }
 .b{
   border: 2px solid  rgb(12, 250, 12);
-  box-shadow: 5px 5px 5px 5px  #8B008B;
   border-radius: 0.5rem;
 }
 @mixin white-gradient {
@@ -133,6 +132,6 @@ $animationSpeed: 40s;
 
 	.slide {
 		height: 100px;
-		width: 250px;
+		width: 300px;
 	}
 }
