@@ -25,6 +25,6 @@ slider:string[]=[
   'assets/home-images/slider/Github-desktop-logo-symbol.svg.png',
   'assets/home-images/slider/html.png',
   'assets/home-images/slider/Java.png',
-  'assets/home-images/slider/mysql.png'
+  'assets/home-images/slider/mysql.jpg'
   ]
 }

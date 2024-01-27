@@ -137,22 +137,19 @@ $animationSpeed: 40s;
   box-shadow: 0 0 10px 10px #8B008B;
 }
 .buttons{
-  :first-child{
+  button{
+    &:first-child{
     background: rgb(12, 250, 12);
     box-shadow: 0 0 10px 10px #8B008B;
-    border: 1px solid black;
-    border-radius: 0.2rem;
-    &:hover{
-      scale: 1.1;
-    }
   }
-  :nth-child(2){
+  &:nth-child(2){
   background:  #8B008B;
   box-shadow: 0 0 10px 10px rgb(12, 250, 12);
-  border: 1px solid black;
+    }
+     border: 1px solid white;
   border-radius: 0.2rem;
-  &:hover{
+    &:hover{
     scale: 1.1;
   }
-  }
+}
 }
