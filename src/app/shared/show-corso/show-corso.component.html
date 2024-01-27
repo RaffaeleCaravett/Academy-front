@@ -1,1 +1,13 @@
-<p>show-corso works!</p>
+<div class="p-3 bg-dark text-white text-center overflow-auto" style="max-width: 500px; max-height: 700px;">
+  <h1 mat-dialog-title> {{data.title}}</h1>
+  <p>{{data.autore.nome}}</p>
+  <img src="{{data.img}}" alt="" class="m-auto" style="max-width: 300px;">
+  <p>{{data.description}}</p>
+  <p><span>Price : {{data.price}}</span> <span><select name="" id="" class="form-select m-3 w-75"><option value="" *ngFor="let c of data.categoriaList">{{c.nome}}</option></select></span></p>
+<button class="m-3 px-4 py-2 favourites">Aggiungi ai preferiti</button>
+<div class="row">
+  <div class="col-md-12 text-center p-4">
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+  </div>
+</div>
+</div>

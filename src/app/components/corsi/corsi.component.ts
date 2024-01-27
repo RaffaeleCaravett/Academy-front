@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.component';
@@ -8,7 +8,7 @@ import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.compone
   templateUrl: './corsi.component.html',
   styleUrls: ['./corsi.component.scss']
 })
-export class CorsiComponent implements AfterViewInit{
+export class CorsiComponent implements AfterViewInit, OnInit{
   search!:FormGroup
   corso:string[]=['','','','','','','','','','','','','','','','','','','','','','','','',''
   ,'','','','','','','','','','','','','','','','','','']
@@ -27,17 +27,20 @@ nome:"Blockchain"
       }
     ],
     img:'assets/home-images/slider/Angular.png',
-    description:"dsfadsfdsfds as fasdfasdfasd as asd fasdgfarge rergertwg  erger ger gerg  rgew gre ewrgerw hytjh uyiytuo8iyunfgcnbfgnfgfdhrty htr"
+    description:"dsfadsfdsfds as fasdfasdfasd as asd fasdgfarge rergertwg  erger ger gerg  rgew gre ewrgerw hytjh uyiytuo8iyunfgcnbfgnfgfdhrty htr",
+    price:10.00
   }
 ]
 
 
 constructor(private matDialog: MatDialog){}
+  ngOnInit(): void {
+    this.search = new FormGroup({
+      search: new FormControl('',Validators.required)
+      })  }
 
   ngAfterViewInit(): void {
-this.search = new FormGroup({
-search: new FormControl('',Validators.required)
-})
+
 }
 
 showCourse(course:any){

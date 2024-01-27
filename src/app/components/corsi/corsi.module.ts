@@ -5,17 +5,22 @@ import { CorsiComponent } from './corsi.component';
 import { CorsiRoutingModule } from './corsi-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.component';
 
 
 @NgModule({
   declarations: [
-CorsiComponent
+CorsiComponent,
+ShowCorsoComponent,
+
   ],
   imports: [
    CommonModule,
     CorsiRoutingModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxPayPalModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

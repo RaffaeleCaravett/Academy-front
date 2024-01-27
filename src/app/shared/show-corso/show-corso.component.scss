@@ -1,0 +1,43 @@
+select{
+  color: #8B008B;
+  border: 2px solid  rgb(12, 250, 12);
+  box-shadow: 0 0 4px 4px #8B008B;
+}
+.favourites{
+  color: white;
+  border: 2px solid  white;
+  box-shadow: 0 0 4px 4px #8B008B;
+  background:  #8B008B;
+  border-radius: 0.2rem;
+}
+.pay{
+  color: white;
+  border: 2px solid  white;
+  box-shadow: 0 0 4px 4px  rgb(12, 250, 12);
+  background:   rgb(12, 250, 12);
+  border-radius: 0.2rem;
+}
+.paypal-button-container {
+  /* Add your custom styles here */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Style the PayPal button */
+ngx-paypal {
+  /* Add your styles to customize the button appearance */
+  background-color: #0070ba;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Hover effect for the button */
+ngx-paypal:hover {
+  background-color: #00508f;
+}
