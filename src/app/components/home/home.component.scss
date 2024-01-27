@@ -61,6 +61,7 @@ p,span{
   .rounded{
       border:2px solid #8B008B;
       min-height: 263.97px;
+      box-shadow: 0 0 10px 10px rgb(12, 250, 12);
       p{
         color:#8B008B;
         line-height: 1.2;
@@ -76,27 +77,22 @@ h2{
 img:hover{
   scale: 1.1;
 }
-.b{
-  border: 2px solid  rgb(12, 250, 12);
-  border-radius: 0.5rem;
-}
+
 @mixin white-gradient {
 	background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
 }
 
 $animationSpeed: 40s;
 
-// Animation
 @keyframes scroll {
 	0% { transform: translateX(0); }
 	100% { transform: translateX(calc(-250px * 7))}
 }
 
 
-// Styling
 .slider {
-	background: white;
-	box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);
+	background: rgb(37, 37, 37);
+	box-shadow: 0 0px 10px 10px #8B008B;
 	height: 100px;
 	margin: auto;
 	overflow:hidden;
@@ -134,4 +130,29 @@ $animationSpeed: 40s;
 		height: 100px;
 		width: 300px;
 	}
+}
+.rounded{
+  border: 2px solid  rgb(12, 250, 12);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px 10px #8B008B;
+}
+.buttons{
+  :first-child{
+    background: rgb(12, 250, 12);
+    box-shadow: 0 0 10px 10px #8B008B;
+    border: 1px solid black;
+    border-radius: 0.2rem;
+    &:hover{
+      scale: 1.1;
+    }
+  }
+  :nth-child(2){
+  background:  #8B008B;
+  box-shadow: 0 0 10px 10px rgb(12, 250, 12);
+  border: 1px solid black;
+  border-radius: 0.2rem;
+  &:hover{
+    scale: 1.1;
+  }
+  }
 }

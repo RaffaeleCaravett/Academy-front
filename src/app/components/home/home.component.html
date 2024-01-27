@@ -1,7 +1,7 @@
   <div class="p-0 m-0 bg-black">
    <div class="container">
     <div class="row text-center py-5">
-    <div class="col-md-12 b bg-dark p-0">
+    <div class="col-md-12 rounded bg-dark p-0">
     <div class=" text-end triangle-topright"></div>
       <h1 class="fw-bolder">ACADEMY</h1>
       <h2>Where <span>learn</span> is made simple.</h2>
@@ -14,14 +14,14 @@
             <p class="py-5 fs-5">Supporting over 100 languages</p>
 </div>
 <div class="col-md-4 p-3 text-center">
-  <div class="rounded shadow p-3 bg-dark">
+  <div class="rounded p-3 bg-dark">
 <h2>Our mission</h2>
 <p class="fs-3">To train new talents and let they become the absoulte bests at what they do !
 </p>
   </div>
 </div>
 <div class="col-md-4 p-3 text-center">
-  <div class="rounded shadow p-3 bg-dark">
+  <div class="rounded p-3 bg-dark">
 <h2>Our offer</h2>
 <p class="fs-3">
  We offer more than 2000 courses on the latest technologies ,each one has its own price.
@@ -29,7 +29,7 @@
   </div>
 </div>
 <div class="col-md-4 p-3 text-center">
-  <div class="rounded shadow p-3 bg-dark">
+  <div class="rounded p-3 bg-dark">
 <h2>From your home</h2>
 <p class="fs-3">
 We are 100% remote company, giving you the chance to study and learn from the place you like the most. </p>
@@ -45,7 +45,7 @@ We are 100% remote company, giving you the chance to study and learn from the pl
 </div>
 <div class="col-md-12 py-5">
   <div class="py-5">
- <div class="border rounded p-5 shadow bg-dark">
+ <div class="rounded p-5 bg-dark">
    <h1> <p> 100,000 +</p></h1>
     <p class="fs-2">students chose us every month.</p>
   </div>
@@ -62,13 +62,18 @@ We are 100% remote company, giving you the chance to study and learn from the pl
   </div>
 </div>
 <div class="col-md-12 py-5 slider-container">
+  <h1 class="py-5">Multiple technologies treated</h1>
   <div class="slider">
     <div class="slide-track">
-      <div class="slide" *ngFor="let c of companies">
+      <div class="slide" *ngFor="let c of slider">
         <img src="{{c}}" height="100" width="250" alt="" />
       </div>
     </div>
   </div>
+</div>
+<div class="col-md-12 py-5 text-center buttons">
+<button class="px-5 py-2 m-4">LOGIN</button>
+<button class="px-5 py-2 m-4">COURSES</button>
 </div>
   </div>
   </div>
