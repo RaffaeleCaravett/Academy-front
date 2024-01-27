@@ -10,8 +10,7 @@ import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.compone
 })
 export class CorsiComponent implements AfterViewInit, OnInit{
   search!:FormGroup
-  corso:string[]=['','','','','','','','','','','','','','','','','','','','','','','','',''
-  ,'','','','','','','','','','','','','','','','','','']
+  corso:string[]=['','','','','','','','','','','','']
 cors:any[]=[
   {
     title: "Corso uno",
