@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsComponent } from './forms.component';
 import { FormsRoutingModule } from './forms-routing.module';
 import { AppComponent } from 'src/app/app.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { AppComponent } from 'src/app/app.component';
   ],
   imports: [
    CommonModule,
-    FormsRoutingModule
+    FormsRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
