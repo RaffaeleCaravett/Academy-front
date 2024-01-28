@@ -9,7 +9,7 @@ h1{
 .form-control {
   border:none;
   border-radius: 0.5rem;
-  box-shadow: 0 0 5px 5px #8B008B;
+  box-shadow: 0 0 2px 2px #8B008B;
 background-color: transparent;
 }
 button{
@@ -21,24 +21,24 @@ button{
 
 .odd{
   color: #8B008B;
-  box-shadow: 0 0 6px 6px #8B008B;
+  box-shadow: 0 0 3px 3px #8B008B;
   background-color:rgb(248, 221, 189);
   select{
   color: #8B008B;
   border: none;
-  box-shadow: 0 0 4px 4px #8B008B;
+  box-shadow: 0 0 2px 2px #8B008B;
 
 }
 }
 
 .even{
   color: #164600;;
-  box-shadow: 0 0 6px 6px #164600;
+  box-shadow: 0 0 3px 3px #164600;
   background-color:rgb(248, 221, 189);
   select{
     color: #164600;
     border: none;
-    box-shadow: 0 0 4px 4px  #164600;;
+    box-shadow: 0 0 2px 2px  #164600;;
   }
 }
 
