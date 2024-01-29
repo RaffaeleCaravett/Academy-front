@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RiservatoComponent } from './riservato.component';
 import { CommonModule } from '@angular/common';
 import { RiservatoRoutingModule } from './riservato-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { RiservatoRoutingModule } from './riservato-routing.module';
   ],
   imports: [
    CommonModule,
-    RiservatoRoutingModule
+    RiservatoRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [RiservatoComponent]
