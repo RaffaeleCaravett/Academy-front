@@ -9,6 +9,7 @@ import { ConfermaComponent } from './components/conferma/conferma.component';
 import { NotfoundComponent } from './shared/notfound/notfound.component';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ToastrModule, provideToastr } from 'ngx-toastr';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    HttpClientModule
 
   ],
   providers: [

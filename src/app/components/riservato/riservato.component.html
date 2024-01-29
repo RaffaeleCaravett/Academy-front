@@ -10,12 +10,15 @@
     <div class="col-md-3">
 <span>💀</span>
     </div>
-    <form [formGroup]="reservedForm" class="p-4 w-50 m-auto">
+    <div class="col-md-12 py-5">
+       <form [formGroup]="reservedForm" class="p-4 w-50 m-auto">
       <label for="" class="py-4 fs-3 fw-bold">Email</label>
 <input type="text" class="form-control bg-transparent m-auto" formControlName="email">
 <label for="" class="py-4 fs-3 fw-bold">Password</label>
-<input type="text" class="form-control bg-transparent m-auto" formControlName="password">
+<input type="password" class="form-control bg-transparent m-auto" formControlName="password">
 <button class="px-5 py-2 m-2" (click)="login()">LOGIN</button>
     </form>
+    </div>
+
   </div>
 </div>
