@@ -11,7 +11,7 @@ h1{
     font-size: 60px;
   }
 
-  form{
+  form, .bg{
     background: rgba(0, 0, 0,0.3);
   }
 button{
@@ -23,14 +23,27 @@ button{
 font-weight: bold;
 box-shadow: 0 0 3px 3px #8B008B;
 transition: 1s;
-&:hover{
-background: -webkit-linear-gradient(#267700, rgb(12, 250, 12));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-font-weight: bold;
-box-shadow: 0 0 3px 3px rgb(12, 250, 12);
-transition: 1s;
-scale: 1.3;
+// &:hover{
+//   background: -webkit-linear-gradient(#267700, rgb(12, 250, 12));
+// -webkit-background-clip: text;
+// -webkit-text-fill-color: transparent;
+// font-weight: bold;
+// box-shadow: 0 0 3px 3px rgb(12, 250, 12);
+// transition: 1s;
+// scale: 1.3;
+// }
 
 }
+.to-hover{
+  a{
+  text-decoration: none;
+  color:white;
+  }
+  &:hover{
+    color:white;
+background:linear-gradient(to top right,#89d366,#309700);
+  }
+}
+.darker{
+  background: rgba(0, 0, 0,0.5);
 }

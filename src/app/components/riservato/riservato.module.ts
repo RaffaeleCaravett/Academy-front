@@ -3,6 +3,7 @@ import { RiservatoComponent } from './riservato.component';
 import { CommonModule } from '@angular/common';
 import { RiservatoRoutingModule } from './riservato-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 @NgModule({
@@ -14,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
    CommonModule,
     RiservatoRoutingModule,
     ReactiveFormsModule,
+    NgxEchartsModule.forChild(),
+
   ],
   providers: [],
   bootstrap: [RiservatoComponent]

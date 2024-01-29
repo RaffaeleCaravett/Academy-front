@@ -9,7 +9,10 @@ import { ConfermaComponent } from './components/conferma/conferma.component';
 import { NotfoundComponent } from './shared/notfound/notfound.component';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthGuard } from './core/auth.guard';
+import { TokenInterceptor } from './core/token.interceptor';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -29,12 +32,19 @@ import { HttpClientModule } from '@angular/common/http';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
-    HttpClientModule
-
+    HttpClientModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
-  providers: [
+  providers: [AuthGuard,
     provideAnimations(),
-    provideToastr(),],
+    provideToastr(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

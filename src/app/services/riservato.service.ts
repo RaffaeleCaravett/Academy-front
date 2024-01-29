@@ -7,7 +7,7 @@ import { environment } from '../core/environment';
 })
 export class RiservatoService {
 
-  private login:string = 'auth/login'
+  private login:string = '/auth/login'
 
   constructor(private http:HttpClient) { }
 

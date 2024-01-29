@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConfermaComponent } from './components/conferma/conferma.component';
 import { ShowCorsoComponent } from './shared/show-corso/show-corso.component';
 import { NotfoundComponent } from './shared/notfound/notfound.component';
+import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
    loadChildren: () => import('../app/components/home/home.module').then(m => m.HomeModule)},
 {
   path:'profilo/:id',
-   loadChildren: () => import('../app/components/profilo/profilo.module').then(m => m.ProfiloModule)},
+   loadChildren: () => import('../app/components/profilo/profilo.module').then(m => m.ProfiloModule), canActivate:[AuthGuard]},
 {
   path:'riservato',
    loadChildren: () => import('../app/components/riservato/riservato.module').then(m => m.RiservatoModule)},

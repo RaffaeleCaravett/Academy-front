@@ -1,5 +1,5 @@
 <div class="container text-center">
-  <div class="row py-5">
+  <div class="row py-5 p-0">
     <div class="col-md-3">
        <span>💀</span>
     </div>
@@ -10,7 +10,7 @@
     <div class="col-md-3">
 <span>💀</span>
     </div>
-    <div class="col-md-12 py-5">
+    <div class="col-md-12 py-5" *ngIf="!user">
        <form [formGroup]="reservedForm" class="p-4 w-50 m-auto">
       <label for="" class="py-4 fs-3 fw-bold">Email</label>
 <input type="text" class="form-control bg-transparent m-auto" formControlName="email">
@@ -19,6 +19,163 @@
 <button class="px-5 py-2 m-2" (click)="login()">LOGIN</button>
     </form>
     </div>
+<div class="col-md-12" *ngIf="user">
+  <div class="row borderd p-0 bg">
+<div class="col-md-2 darker">
+<div class="row p-0 text-white">
+  <div class="col-md-12 p-0">
+    <img src="assets/logo/academy.png" alt="" style="max-height: 100px; width: 220px;">
+  </div>
+  <div class="col-md-12 py-2">
+  <p class="p-2 to-hover" (click)="section='courses'">
+Courses
+</p>
+  </div>
+  <div class="col-md-12 py-2">
+  <p class="p-2 to-hover" (click)="section='subjects'">
+Subjects
+</p>
+  </div>
+  <div class="col-md-12 py-2">
+  <p class="p-2 to-hover" (click)="section='teachers'">
+Teachers
+</p>
+  </div>
+  <div class="col-md-12 py-2">
+  <p class="p-2 to-hover" (click)="section='users'">
+Users
+</p>
+  </div>
+</div>
+</div>
+<div class="col-md-10">
+<div class="row p-0">
+  <div class="col-md-12 darker" style="min-height: 100px">
+    <div class="row text-start text-white">
+      <div class="col-md-8  p-2">
+      <h2><button class="btn" (click)="section=''">{{user.nome + " " + user.cognome}} office</button></h2>
+      </div>
+      <div class="col-md-4 p-0">
+        <div class="dropdown">
+          <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+<div class="row">
+<div class="col-md-3">
+  <img src="../../../assets/logo/crown.png" alt="" class="w-100 rounded-circle">
+</div>
+<div class="col-md-9 p-1 overflow-auto ">
+  <p>{{user.nome + " " + user.cognome}}</p>
+  <p>{{user.email}}</p>
+</div>
+</div>          </button>
+          <ul class="dropdown-menu">
+            <li>ID : {{user.id}}</li>
+            <li>AGE : {{user.eta}}</li>
+            <li>ROLE : {{user.role}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 p-4" *ngIf="section==''">
+    <div class="row text-white">
 
+      <div class="col-md-9">
+<div class="row">
+   <div class="col-md-4 p-2">
+        <div class="darker row w-100 rounded">
+<div class="col-md-6">
+  <img src="assets/logo/crown.png" alt="" class="rounded w-100">
+</div>
+<div class="col-md-6 px-2 text-end">
+  <p class="fs-4 darker p-2 text-center">
+   ⚙️</p>
+</div>
+<div class="col-md-12 py-2">
+<p>
+ {{user.id + " - " + user.nome + " " + user.cognome}}
+</p>
+<p>
+  {{user.role}}
+</p>
+</div>
+        </div>
+      </div>
+      <div class="col-md-8 p-2">
+        <div class="darker row w-100 rounded">
+<div class="col-md-12 p-2">
+  <div class="chart" echarts [options]="option" style="max-height: 270px;"></div>
+</div>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-8"></div>
+</div>
+      </div>
+      <div class="col-md-3 p-2">
+        <div class="darker rounded row">
+<div class="p-2 " *ngFor="let f of fake">
+<div class="row border w-100 m-auto rounded">
+  <div class="col-md-3">
+  <img src="{{f.image}}" alt="" class="w-100">
+</div>
+<div class="col-md-9">
+  <p class="fs-5">{{f.nickname}}</p>
+  <p class="fs-6">{{f.name}}</p>
+</div>
+</div>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 p-2" *ngIf="section=='courses'">
+<div class="row">
+  <div class="col-md-4 p-2">
+<form [formGroup]="coursesForm" class="p-2 darker rounded"
+></form>
+  </div>
+  <div class="col-md-8 p-2">
+
+  </div>
+</div>
+  </div>
+  <div class="col-md-12 p-2" *ngIf="section=='subjects'">
+<div class="row">
+  <div class="col-md-4 p-2">
+<form [formGroup]="subjectsForm" class="p-2 darker rounded"
+></form>
+  </div>
+  <div class="col-md-8 p-2">
+
+  </div>
+</div>
+  </div>
+  <div class="col-md-12 p-2" *ngIf="section=='teachers'">
+<div class="row">
+  <div class="col-md-4 p-2">
+<form [formGroup]="teachersForm" class="p-2 darker rounded"
+></form>
+  </div>
+  <div class="col-md-8 p-2">
+
+  </div>
+</div>
+  </div>
+  <div class="col-md-12 p-2" *ngIf="section=='users'">
+<div class="row">
+  <div class="col-md-4 p-2">
+<form [formGroup]="usersForm" class="p-2 darker rounded"
+></form>
+  </div>
+  <div class="col-md-8 p-2">
+
+  </div>
+</div>
+  </div>
+</div>
+</div>
+  </div>
+
+</div>
   </div>
 </div>
