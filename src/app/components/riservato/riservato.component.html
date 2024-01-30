@@ -98,7 +98,17 @@ Users
   {{user.role}}
 </p>
 </div>
+
         </div>
+        <div class="darker my-2 row w-100 rounded">
+<div class="col-md-12 p-2">
+          <div class="py-2 fs-1" *ngIf="courses">
+           <h2 class="text-success">Courses</h2>
+            {{courses.content.length}}
+          </div>
+        </div>
+        </div>
+
       </div>
       <div class="col-md-8 p-2">
         <div class="darker row w-100 rounded">
@@ -107,8 +117,26 @@ Users
 </div>
         </div>
       </div>
-      <div class="col-md-4"></div>
-      <div class="col-md-8"></div>
+      <div class="col-md-4 p-2">
+        <div class="darker row w-100 rounded">
+<div class="col-md-12 p-2">
+          <div class="py-2 fs-1" *ngIf="subjects">
+            <h2 class="text-success">subjects</h2>
+            {{subjects.content.length}}
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-md-8 p-2">
+        <div class="darker row w-100 rounded">
+          <div class="col-md-12 p-2">
+            <div class=" py-2 fs-1" *ngIf="teachers">
+              <h2 class="text-success">Teachers</h2>
+              {{teachers.content.length}}
+            </div>
+          </div>
+      </div>
+      </div>
 </div>
       </div>
       <div class="col-md-3 p-2">
@@ -126,6 +154,21 @@ Users
 </div>
         </div>
       </div>
+
+        <div class="col-md-12 p-2">
+          <div class="darker py-5 row fs-5" *ngIf="users">
+            <h2 class="text-success">Users</h2>
+            <div class="col-md-3" *ngFor="let u of users.content">
+              {{u.nome  + " " + u.cognome}}
+              <p>{{u.role}}</p>
+            </div>
+<p>
+  <span class="btn mx-2 fs-3" *ngIf="users.number!=0" (click)="getAllUsers(users.number-1)">⬅️</span>
+  <span class="btn mx-2 fs-3" *ngIf="users.number!=users.totalPages-1" (click)="getAllUsers(users.number+1)">➡️</span>
+</p>
+          </div>
+        </div>
+
     </div>
   </div>
   <div class="col-md-12 p-2" *ngIf="section=='courses'">

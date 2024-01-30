@@ -17,6 +17,10 @@ reservedForm!:FormGroup
 user:any
 section:string=''
 option:any
+courses:any
+subjects:any
+teachers:any
+users:any
 fake:any[] = [
   {
     image: 'https://placekitten.com/200/300',
@@ -51,6 +55,8 @@ usersForm!:FormGroup
 constructor(private reservedService:RiservatoService,private authService:AuthService,private toastr:ToastrService,private authGuard:AuthGuard){}
   ngOnDestroy(): void {
 this.user=null
+this.authService.token=''
+this.authService.refreshToken=''
  }
 
 ngOnInit(): void {
@@ -294,20 +300,25 @@ this.reservedService.log(
 if(tokens){
 this.authService.setToken(tokens.tokens.accessToken)
 this.authService.setRefreshToken(tokens.tokens.refreshToken)
-this.authGuard.authenticateUser(true)
-localStorage.setItem('accessToken',this.authService.token)
-localStorage.setItem('refreshToken',this.authService.refreshToken)
 this.authService.verifyToken(this.authService.token).subscribe((user:any)=>{
   this.user=user
 this.toastr.success("Accesso effettuato come " + this.user.nome + " " + this.user.cognome)
+
+
+this.reservedService.getAllCourses().subscribe((courses:any)=>{
+  this.courses=courses})
+  this.reservedService.getAllSubjects().subscribe((subjects:any)=>{
+    this.subjects=subjects})
+  this.reservedService.getAllTeachers().subscribe((teachers:any)=>{
+    this.teachers=teachers})
+    this.reservedService.getAllUsers().subscribe((users:any)=>{
+this.users=users})
+
 },err=>{
 this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tkns:any)=>{
   if(tkns){
     this.authService.setToken(tkns.accessToken)
     this.authService.setRefreshToken(tkns.refreshToken)
-    this.authGuard.authenticateUser(true)
-    localStorage.setItem('accessToken',this.authService.token)
-    localStorage.setItem('refreshToken',this.authService.refreshToken)
     this.authService.verifyToken(this.authService.token).subscribe((user:any)=>{
       if(user){
         this.user=user
@@ -325,5 +336,10 @@ this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tk
   this.toastr.error("Completa il form.")
 
 }
+}
+getAllUsers(page:number){
+  this.reservedService.getAllUsers(page).subscribe((users:any)=>{
+    this.users=users
+  })
 }
 }
