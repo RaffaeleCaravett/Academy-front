@@ -178,7 +178,7 @@
   <div class="col-md-12 p-2" *ngIf="section=='courses'">
 <div class="row">
   <div class="col-md-4 p-2">
-    <h2>Form di inserimento/ricerca/modifica</h2>
+    <h2 class="text-white">Form di inserimento/ricerca/modifica</h2>
 <form [formGroup]="coursesForm" class="p-2 darker rounded text-white"
 >
 <label for="">Nome </label>
@@ -188,9 +188,14 @@
 <label for="">Descrizione</label>
 <input type="text" class="form-control border border-light bg-transparent " formControlName="descrizione">
 <label for="">Docente</label>
-<select class="form-select border border-light bg-transparent " formControlName="docente_id">
+<select class="form-select border border-light bg-transparent " *ngIf="docenti" formControlName="docente_id" (change)="updateDocente(coursesForm.controls['docente_id'].value)">
   <option value=""></option>
   <option value="{{d}}" *ngFor="let d of docenti">{{d.i + " " + d.nome }}</option>
+</select>
+<label for="" *ngIf="materie">Materia</label>
+<select class="form-select border border-light bg-transparent " *ngIf="materie" formControlName="materia_id">
+  <option value="" ></option>
+  <option value="{{d}}" *ngFor="let d of materie" >{{d.i + " " + d.nome }}</option>
 </select>
 <span class="fs-6 m-1 btn btn-success" (click)="insertCourse()">Add course</span>
 <span class="fs-6 m-1 btn btn-success" (click)="searchCourse()">Search course</span>
@@ -214,8 +219,11 @@
   <div class="col-md-12 p-2" *ngIf="section=='subjects'">
 <div class="row">
   <div class="col-md-4 p-2">
-<form [formGroup]="subjectsForm" class="p-2 darker rounded"
-></form>
+<form [formGroup]="subjectsForm" class="p-2 darker rounded">
+<label for="">Nome </label>
+<input type="text" class="form-control border border-light bg-transparent " formControlName="nome">
+<span class="fs-6 m-1 btn btn-success" (click)="saveSubject()">Add subject</span>
+</form>
   </div>
   <div class="col-md-8 p-2">
 

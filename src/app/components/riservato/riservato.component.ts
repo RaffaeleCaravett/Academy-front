@@ -12,7 +12,7 @@ import { RiservatoService } from 'src/app/services/riservato.service';
   styleUrls: ['./riservato.component.scss']
 })
 export class RiservatoComponent implements OnInit, OnDestroy{
-
+materie:any
   docenti:any
 reservedForm!:FormGroup
 user:any
@@ -292,9 +292,12 @@ ngOnInit(): void {
       nome:new FormControl('', Validators.required),
       prezzo:new FormControl('',Validators.required),
       descrizione:new FormControl('',Validators.required),
-      docente_id:new FormControl('',Validators.required)
+      docente_id:new FormControl('',Validators.required),
+      materia_id:new FormControl('',Validators.required)
     })
-
+this.subjectsForm=new FormGroup({
+  nome:new FormControl('', Validators.required)
+})
 
 
   }
@@ -366,10 +369,15 @@ insertCourse(){
         descrizione:this.coursesForm.controls['descrizione'].value,
         docente_id:this.coursesForm.controls['docente_id'].value
   }
-    ).subscribe((data:any)=>{
-      this.courses.content.push(data)
-    },err=>{
-      this.toastr.error(err.error.message||'Corso non salvato')
+    ).subscribe(
+    {
+      next: (data: Object) => {
+        this.courses.content.push(data)
+      },
+      error: (err: any) => {
+        this.toastr.error(err.error.message||'Corso non salvato')      },
+      complete: () => {
+      }
     })
   }else
   {
@@ -386,5 +394,33 @@ let docente_id = this.coursesForm.controls['docente_id'].value
   ).subscribe((courses:any)=>{
     this.courses=courses
   })
+}
+
+updateDocente(docente_id:number){
+  let docente = this.docenti.filter((d:any)=>{
+d.id=docente_id
+  })
+
+  this.materie = docente.materia
+}
+
+saveSubject(){
+  if(this.subjectsForm.valid){
+    this.reservedService.saveSubject({nome:this.subjectsForm.controls['nome'].value}).subscribe(
+      {
+        next: (materia: Object) => {
+          this.subjects.content.push(materia)
+        },
+        error: (err: any) => {
+          this.toastr.error(err.error.message||"Materia non salvata")
+        },
+        complete: () => {
+          this.subjectsForm.reset()
+        }
+      }
+    )
+  }else{
+    this.toastr.error("Compila il form")
+  }
 }
 }
