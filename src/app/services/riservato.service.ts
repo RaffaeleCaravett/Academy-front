@@ -29,6 +29,9 @@ export class RiservatoService {
   getAllTeachers(){
     return this.http.get(environment.API_URL+this.teachers)
   }
+  getAllTeachersList(){
+    return this.http.get(environment.API_URL+this.teachers+'/list')
+  }
   getAllUsers(page?:number){
     if(!page){
           return this.http.get(environment.API_URL+'/auth'+this.users)
@@ -86,5 +89,8 @@ export class RiservatoService {
   }
   getUserById(id:number){
     return this.http.get(environment.API_URL+this.users+`/${id}`)
+  }
+  getCoursesByParams(nome?:string,descrizione?:string,prezzo?:number,docente_id?:number){
+return this.http.get(environment.API_URL+this.courses+'/params?')
   }
 }

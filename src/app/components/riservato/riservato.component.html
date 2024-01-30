@@ -28,22 +28,26 @@
   </div>
   <div class="col-md-12 py-2">
   <p class="p-2 to-hover" (click)="section='courses'">
-Courses
+    <span class="fs-5">Courses</span>
+
 </p>
   </div>
   <div class="col-md-12 py-2">
   <p class="p-2 to-hover" (click)="section='subjects'">
-Subjects
+    <span class="fs-5">Subjects</span>
+
 </p>
   </div>
   <div class="col-md-12 py-2">
   <p class="p-2 to-hover" (click)="section='teachers'">
-Teachers
+    <span class="fs-5">Teachers</span>
+
 </p>
   </div>
   <div class="col-md-12 py-2">
   <p class="p-2 to-hover" (click)="section='users'">
-Users
+    <span class="fs-5">Users</span>
+
 </p>
   </div>
 </div>
@@ -156,7 +160,7 @@ Users
       </div>
 
         <div class="col-md-12 p-2">
-          <div class="darker py-5 row fs-5" *ngIf="users">
+          <div class="darker rounded py-5 row fs-5" *ngIf="users">
             <h2 class="text-success">Users</h2>
             <div class="col-md-3" *ngFor="let u of users.content">
               {{u.nome  + " " + u.cognome}}
@@ -174,11 +178,36 @@ Users
   <div class="col-md-12 p-2" *ngIf="section=='courses'">
 <div class="row">
   <div class="col-md-4 p-2">
-<form [formGroup]="coursesForm" class="p-2 darker rounded"
-></form>
+    <h2>Form di inserimento/ricerca/modifica</h2>
+<form [formGroup]="coursesForm" class="p-2 darker rounded text-white"
+>
+<label for="">Nome </label>
+<input type="text" class="form-control border border-light bg-transparent " formControlName="nome">
+<label for="">Prezzo</label>
+<input type="number" class="form-control border border-light bg-transparent " formControlName="prezzo">
+<label for="">Descrizione</label>
+<input type="text" class="form-control border border-light bg-transparent " formControlName="descrizione">
+<label for="">Docente</label>
+<select class="form-select border border-light bg-transparent " formControlName="docente_id">
+  <option value=""></option>
+  <option value="{{d}}" *ngFor="let d of docenti">{{d.i + " " + d.nome }}</option>
+</select>
+<span class="fs-6 m-1 btn btn-success" (click)="insertCourse()">Add course</span>
+<span class="fs-6 m-1 btn btn-success" (click)="searchCourse()">Search course</span>
+<span class="fs-6 m-1 btn btn-success" (click)="insertCourse()">Delete course</span>
+<span class="fs-6 m-1 btn btn-success" (click)="insertCourse()">Modify course</span>
+</form>
   </div>
   <div class="col-md-8 p-2">
+<div class="row">
+  <div class="col-md-3 p-1">
+    <div class="darker rounded" *ngFor="let c of courses">
+<h2>{{c.nome}}</h2>
+<p>{{c.descrizione}}</p>
 
+    </div>
+  </div>
+</div>
   </div>
 </div>
   </div>

@@ -13,6 +13,7 @@ import { RiservatoService } from 'src/app/services/riservato.service';
 })
 export class RiservatoComponent implements OnInit, OnDestroy{
 
+  docenti:any
 reservedForm!:FormGroup
 user:any
 section:string=''
@@ -286,7 +287,17 @@ ngOnInit(): void {
   this.reservedForm=new FormGroup({
     email:new FormControl('',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     password:new FormControl('',Validators.required)
-    })}
+    })
+    this.coursesForm=new FormGroup({
+      nome:new FormControl('', Validators.required),
+      prezzo:new FormControl('',Validators.required),
+      descrizione:new FormControl('',Validators.required),
+      docente_id:new FormControl('',Validators.required)
+    })
+
+
+
+  }
 
 login(){
 if(this.reservedForm.valid){
@@ -313,6 +324,9 @@ this.reservedService.getAllCourses().subscribe((courses:any)=>{
     this.teachers=teachers})
     this.reservedService.getAllUsers().subscribe((users:any)=>{
 this.users=users})
+this.reservedService.getAllTeachersList().subscribe((docenti:any)=>{
+  this.docenti=docenti
+})
 
 },err=>{
 this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tkns:any)=>{
@@ -340,6 +354,37 @@ this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tk
 getAllUsers(page:number){
   this.reservedService.getAllUsers(page).subscribe((users:any)=>{
     this.users=users
+  })
+}
+
+insertCourse(){
+  if(this.coursesForm.valid){
+    this.reservedService.saveCourse(
+      {
+        nome:this.coursesForm.controls['nome'].value,
+        prezzo:this.coursesForm.controls['prezzo'].value,
+        descrizione:this.coursesForm.controls['descrizione'].value,
+        docente_id:this.coursesForm.controls['docente_id'].value
+  }
+    ).subscribe((data:any)=>{
+      this.courses.content.push(data)
+    },err=>{
+      this.toastr.error(err.error.message||'Corso non salvato')
+    })
+  }else
+  {
+    this.toastr.error("Completa il form prima.")
+  }
+}
+searchCourse(){
+let nome= this.coursesForm.controls['nome'].value
+let descrizione = this.coursesForm.controls['descrizione'].value
+let prezzo = this.coursesForm.controls['prezzo'].value
+let docente_id = this.coursesForm.controls['docente_id'].value
+  this.reservedService.getCoursesByParams(
+    nome,descrizione,prezzo,docente_id
+  ).subscribe((courses:any)=>{
+    this.courses=courses
   })
 }
 }
