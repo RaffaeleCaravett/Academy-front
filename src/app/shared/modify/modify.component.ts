@@ -31,6 +31,7 @@ this.subjectForm=new FormGroup({
 elimina(id:number){
   if(this.data[1]=='subject'){
   this.reservedService.deleteSubject(id).subscribe((data:any)=>{
+    console.log(data)
     if(data){
       this.closeDialog("Materia eliminata")
     }else{

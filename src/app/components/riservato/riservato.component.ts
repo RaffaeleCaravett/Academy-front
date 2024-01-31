@@ -6,6 +6,7 @@ import { AuthGuard } from 'src/app/core/auth.guard';
 import { AuthService } from 'src/app/services/auth.service';
 import { RiservatoService } from 'src/app/services/riservato.service';
 import { ModifyComponent } from 'src/app/shared/modify/modify.component';
+import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.component';
 
 
 @Component({
@@ -538,7 +539,12 @@ newSubjs.push(sub)
 this.materiePerCorsi=newSubjs
 }
 modifyCourses(corso:any){
-
+const dialogRef=this.matDialog.open(ShowCorsoComponent,{data:[corso,"admin"]})
+dialogRef.afterClosed().subscribe((result:any)=>{
+  if(result&&result=='Eliminato'){
+    this.updatedatas()
+  }
+})
 }
 updatedatas(){
   this.reservedService.getAllCourses().subscribe((courses:any)=>{

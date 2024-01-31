@@ -13,6 +13,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './core/auth.guard';
 import { TokenInterceptor } from './core/token.interceptor';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ShowCorsoComponent } from './shared/show-corso/show-corso.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     FooterComponent,
     ConfermaComponent,
     NotfoundComponent,
+    ShowCorsoComponent,
 
   ],
   imports: [
@@ -36,6 +39,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
+    NgxPayPalModule,
+
   ],
   providers: [AuthGuard,
     provideAnimations(),

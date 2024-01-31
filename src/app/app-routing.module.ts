@@ -21,7 +21,7 @@ const routes: Routes = [
    loadChildren: () => import('../app/components/riservato/riservato.module').then(m => m.RiservatoModule)},
    {
     path:'corsi',
-     loadChildren: () => import('../app/components/corsi/corsi.module').then(m => m.CorsiModule)},
+     loadChildren: () => import('../app/components/corsi/corsi.module').then(m => m.CorsiModule), canActivate:[AuthGuard]},
 {
   path:'conferma',
   component:ConfermaComponent

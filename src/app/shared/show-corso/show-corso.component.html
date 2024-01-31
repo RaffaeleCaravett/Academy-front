@@ -1,13 +1,15 @@
 <div class="p-3 bg-dark text-white text-center overflow-auto" style="max-width: 500px; max-height: 700px;">
-  <h1 mat-dialog-title> {{data.title}}</h1>
-  <p>{{data.autore.nome}}</p>
-  <img src="{{data.img}}" alt="" class="m-auto" style="max-width: 300px;">
-  <p>{{data.description}}</p>
-  <p><span>Price : {{data.price}}</span> <span><select name="" id="" class="form-select m-3 w-75"><option value="" *ngFor="let c of data.categoriaList">{{c.nome}}</option></select></span></p>
-<button class="m-3 px-4 py-2 favourites">Aggiungi ai preferiti</button>
+  <h1 mat-dialog-title> {{data[0].nome}}</h1>
+  <p class="fs-5">Docente/i :</p>
+  <p *ngFor="let d of data[0].docente">{{d.nome}}</p>
+  <img src="../../../assets/logo/crown.png" alt="" class="m-auto" style="max-width: 300px;">
+  <p>{{data[0].descrizione}}</p>
+  <p><span>Price : {{data[0].prezzo}}</span> <span><select name="" id="" class="form-select m-3 w-75"><option value="" *ngFor="let c of data[0].materia">{{c.nome}}</option></select></span></p>
+<button class="m-3 px-4 py-2 favourites" *ngIf="!data[1]">Aggiungi ai preferiti</button>
+<button class="m-3 px-4 py-2 favourites" *ngIf="data&&data[1]" (click)="elimina(data[0])">Elimina</button>
 <div class="row">
   <div class="col-md-12 text-center p-4">
-    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    <ngx-paypal [config]="payPalConfig" *ngIf="!data[1]"></ngx-paypal>
   </div>
 </div>
 </div>

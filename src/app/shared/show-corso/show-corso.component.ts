@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IPayPalConfig,ICreateOrderRequest } from 'ngx-paypal';
 import { ToastrService } from 'ngx-toastr';
+import { RiservatoService } from 'src/app/services/riservato.service';
 @Component({
   selector: 'app-show-corso',
   templateUrl: './show-corso.component.html',
@@ -11,7 +12,7 @@ export class ShowCorsoComponent {
   public payPalConfig ? : any;
 
 
-  constructor(private dialogRef: MatDialogRef<ShowCorsoComponent>, @Inject(MAT_DIALOG_DATA) public data: any , private toastr:ToastrService) {
+  constructor(private dialogRef: MatDialogRef<ShowCorsoComponent>, @Inject(MAT_DIALOG_DATA) public data: any , private toastr:ToastrService, private reservedService:RiservatoService) {
   }
 
   ngOnInit(): void {
@@ -84,6 +85,17 @@ export class ShowCorsoComponent {
       console.log("onClick", data, actions);
     }
   };
+}
+
+elimina(corso:any){
+  this.reservedService.deleteCourse(corso.id).subscribe((data:any)=>{
+    if(data){
+      this.toastr.success("Corso eliminato.")
+    }
+  },err=>{
+    this.toastr.error(err.error.message||"Corso non eliminato")
+  });
+  this.closeDialog("Eliminato")
 }
 
   closeDialog(param?:any): void {
