@@ -10,11 +10,11 @@
   <label for="" class="p-2">Nome</label>
   <input type="text" class="form-control" formControlName="nome">
   <label for="">Materie insegnate </label>
-<p class="p-1 fs-5" *ngFor="let m of data[0].materia">{{m.id + " - " + m.nome}} <span class="fs-4" (click)="removeTeacherSubject(m)">✖️</span></p>
+<p class="p-1 fs-5" *ngFor="let m of teacherSubjects">{{m.id + " - " + m.nome}} <span class="fs-4" (click)="removeTeacherSubject(m.id)">✖️</span></p>
   <label for="">Materie disponibili </label>
-  <select class="form-select border border-light bg-transparent"  formControlName="materia_id">
+  <select class="form-select border border-light bg-transparent"  formControlName="materia_id" (change)="addToTeachersSubjects(teacherForm.controls['materia_id'].value)">
     <option value="" ></option>
-    <option value="{{d}}" *ngFor="let d of data[2]" >{{d.i + " " + d.nome }}</option>
+    <option value="{{d.id}}" *ngFor="let d of data[2]" >{{d.id + " " + d.nome }}</option>
   </select>
   <button class="btn m-2 btn-danger" (click)="elimina(data[0].id)">Elimina</button><button class="btn m-2 btn-success" (click)="modifica(data[0].id)">Modifica</button>
 </form>

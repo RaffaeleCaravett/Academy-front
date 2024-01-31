@@ -60,7 +60,7 @@ this.teacherSubjects.forEach((ma:any)=>{
   materie.push(ma.id)
 })
 
-    this.reservedService.putTeachers(id,{nome:this.subjectForm.controls['nome'].value,materia_id:materie}).subscribe((data:any)=>{
+    this.reservedService.putTeachers(id,{nome:this.teacherForm.controls['nome'].value,materia_id:materie}).subscribe((data:any)=>{
       if(data){
         this.closeDialog("Prof. modificata/o")
       }else{
@@ -75,8 +75,27 @@ this.teacherSubjects.forEach((ma:any)=>{
   }
 
   removeTeacherSubject(id:number){
-this.teacherSubjects=this.teacherSubjects.filter((materia:any)=>{
-  materia.id!=id
-})
+    let newSubjs:any[]=[]
+
+    this.teacherSubjects.forEach((sub:any)=>{
+     if(sub.id!=id){
+    newSubjs.push(sub)
+     }
+    })
+    this.teacherSubjects=newSubjs
+  }
+
+  addToTeachersSubjects(subject:any){
+    this.data[2].forEach((s:any)=>{
+      if(s.id==Number(subject)){
+        let bool=false
+        this.teacherSubjects.forEach((s:any)=>{
+          if(s.id==subject){
+            bool=true
+          }
+        })
+        if(!bool){this.teacherSubjects.push(s)}
+      }
+    })
   }
 }
