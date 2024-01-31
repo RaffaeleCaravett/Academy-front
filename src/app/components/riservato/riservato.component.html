@@ -188,37 +188,46 @@
 <label for="">Descrizione</label>
 <input type="text" class="form-control border border-light bg-transparent " formControlName="descrizione">
 <label for="">Docente</label>
-<select class="form-select border border-light bg-transparent " *ngIf="docenti" formControlName="docente_id" (change)="updateDocente(coursesForm.controls['docente_id'].value)">
+<select class="form-select border border-light bg-transparent  text-danger" *ngIf="docenti" formControlName="docente_id" (change)="updateDocente(coursesForm.controls['docente_id'].value)">
   <option value=""></option>
-  <option value="{{d}}" *ngFor="let d of docenti">{{d.i + " " + d.nome }}</option>
+  <option value="{{d.id}}" *ngFor="let d of docenti">{{d.id + " " + d.nome }}</option>
 </select>
-<label for="" *ngIf="materie">Materia</label>
-<select class="form-select border border-light bg-transparent " *ngIf="materie" formControlName="materia_id">
+<div class="overflow-auto" *ngIf="materiePerCorsi.length>0">
+ <label for="">Materie che hai scelto per il corso </label>
+<p class="p-1 fs-5" *ngFor="let m of materiePerCorsi">{{m.id + " - " + m.nome}} <span class="fs-4" (click)="removeMateriaPerCorso(m.id)">✖️</span></p>
+</div>
+<div *ngIf="materie.length>0">
+<label for="">Materie che insegna il docente </label>
+<select class="form-select border border-light bg-transparent  text-danger"  formControlName="materia_id" (change)="updateMateria(coursesForm.controls['materia_id'].value)">
   <option value="" ></option>
-  <option value="{{d}}" *ngFor="let d of materie" >{{d.i + " " + d.nome }}</option>
+  <option value="{{d.id}}" *ngFor="let d of materie" >{{d.id + " " + d.nome }}</option>
 </select>
+</div>
 <span class="fs-6 m-1 btn btn-success" (click)="insertCourse()">Add course</span>
 <span class="fs-6 m-1 btn btn-success" (click)="searchCourse()">Search course</span>
-<span class="fs-6 m-1 btn btn-success" (click)="insertCourse()">Delete course</span>
-<span class="fs-6 m-1 btn btn-success" (click)="insertCourse()">Modify course</span>
 </form>
   </div>
   <div class="col-md-8 p-2">
-<div class="row">
-  <div class="col-md-3 p-1">
-    <div class="darker rounded" *ngFor="let c of courses">
-<h2>{{c.nome}}</h2>
+    <div class="row darker rounded w-100">
+      <h2 *ngIf="courses.content.length==0" class="text-white">Non ci sono corsi</h2>
+      <div class="col-md-4 p-2 text-white" *ngFor="let c of courses.content" (click)="checkDocente(c)">
+        <div class="darker rounded p-1">
+          <p class="p-2 text-end"><span class="btn fs-4" (click)="modifyCourses(c)">⚙️</span></p>
+        <h2>{{c.nome}}</h2>
 <p>{{c.descrizione}}</p>
-
-    </div>
+<p>Prezzo - {{c.prezzo}}</p>
+<p *ngFor="let d of c.docente">Docente - {{d.nome}}</p>
+<p><span class="p-1 fs-5" *ngFor="let m of c.materia">{{m.nome}}</span></p>
+        </div>
   </div>
 </div>
   </div>
 </div>
   </div>
-  <div class="col-md-12 p-2" *ngIf="section=='subjects'">
+  <div class="col-md-12 p-2 text-white" *ngIf="section=='subjects'">
 <div class="row">
   <div class="col-md-4 p-2">
+    <h2 class="text-white">Form di inserimento/ricerca/modifica</h2>
 <form [formGroup]="subjectsForm" class="p-2 darker rounded">
 <label for="">Nome </label>
 <input type="text" class="form-control border border-light bg-transparent " formControlName="nome">
@@ -226,29 +235,83 @@
 </form>
   </div>
   <div class="col-md-8 p-2">
-
+<div class="row darker rounded w-100">
+  <h2 *ngIf="subjects.content.length==0" class="text-white">Non ci sono materie</h2>
+  <div class="col-md-4 p-2" *ngFor="let s of subjects.content">
+    <div class="p-1 darker rounded">
+       <p class="p-2 text-end"><span class="btn fs-4" (click)="modifySubject(s)">⚙️</span></p>
+    <p class="fs-4">{{s. id + " - " + s.nome }}</p>
+    </div>
+  </div>
+  <p>
+    <span class="btn mx-2 fs-3" *ngIf="subjects.number!=0" (click)="getAllSubjects(subjects.number-1)">⬅️</span>
+    <span class="btn mx-2 fs-3" *ngIf="subjects.number!=subjects.totalPages-1" (click)="getAllSubjects(subjects.number+1)">➡️</span>
+  </p>
+</div>
   </div>
 </div>
   </div>
-  <div class="col-md-12 p-2" *ngIf="section=='teachers'">
+  <div class="col-md-12 p-2 text-white"  *ngIf="section=='teachers'">
 <div class="row">
   <div class="col-md-4 p-2">
-<form [formGroup]="teachersForm" class="p-2 darker rounded"
-></form>
+    <h2 class="text-white">Form di inserimento/ricerca/modifica</h2>
+<form [formGroup]="teachersForm" class="p-2 darker rounded">
+  <label for="">Nome </label>
+  <input type="text" class="form-control border border-light bg-transparent" formControlName="nome">
+  <div *ngIf="teachersSubjects.length>0">
+      <label for="">Materie insegnate </label>
+  <p class="p-1 fs-5" *ngFor="let m of teachersSubjects">{{m.id + " - " + m.nome}} <span class="fs-4" (click)="removeTeacherSubject(m)">✖️</span></p>
+  </div>
+    <label for="">Materie disponibili </label>
+  <select class="form-select border border-light bg-transparent text-danger" formControlName="materia_id" (change)="addToTeachersSubjects(teachersForm.controls['materia_id'].value)">
+    <option value="" ></option>
+    <option value="{{d.id}}" *ngFor="let d of subjects.content">{{d.id + " " + d.nome }}</option>
+  </select>  <span class="fs-6 m-1 btn btn-success" (click)="saveTeacher()">Add teacher</span>
+</form>
   </div>
   <div class="col-md-8 p-2">
+    <div class="row darker rounded w-100">
+      <h2 *ngIf="teachers.content.length==0" class="text-white">Non ci sono insegnanti</h2>
+      <div class="col-md-4 p-2" *ngFor="let s of teachers.content">
+        <div class="p-1 darker rounded">
+<p class="p-2 text-end"><span class="btn fs-4" (click)="modifyTeacher(s)">⚙️</span></p>
+        <p class="fs-4">{{s. id + " - " + s.nome }}</p>
+        <label for="" class="p-1">Materie insegnate: </label>
+        <select name="" id="" class="form-select">
+          <option value="" ></option>
+          <option value="{{d}}" *ngFor="let d of s.materia" >{{d.id + " " + d.nome }}</option>
+        </select>
+        </div>
 
-  </div>
+      </div>
+      <p>
+        <span class="btn mx-2 fs-3" *ngIf="teachers.number!=0" (click)="getAllTeachers(teachers.number-1)">⬅️</span>
+        <span class="btn mx-2 fs-3" *ngIf="teachers.number!=subjects.totalPages-1" (click)="getAllTeachers(teachers.number+1)">➡️</span>
+      </p>
+    </div>
+      </div>
 </div>
   </div>
-  <div class="col-md-12 p-2" *ngIf="section=='users'">
+  <div class="col-md-12 p-2 text-white"  *ngIf="section=='users'">
 <div class="row">
   <div class="col-md-4 p-2">
-<form [formGroup]="usersForm" class="p-2 darker rounded"
-></form>
+    <h2 class="text-white">Form di inserimento/ricerca/modifica</h2>
+<form [formGroup]="usersForm" class="p-2 darker rounded">
+
+</form>
   </div>
   <div class="col-md-8 p-2">
-
+ <div class="row darker rounded w-100">
+  <h2 *ngIf="users.content.length==0">Non ci sono users</h2>
+  <div class="col-md-4 p-2" *ngFor="let s of users.content">
+        <div class="rounded darker p-1">
+                  </div>
+      </div>
+      <p>
+        <span class="btn mx-2 fs-3" *ngIf="users.number!=0" (click)="getAllUsers(users.number-1)">⬅️</span>
+        <span class="btn mx-2 fs-3" *ngIf="users.number!=subjects.totalPages-1" (click)="getAllUsers(users.number+1)">➡️</span>
+      </p>
+ </div>
   </div>
 </div>
   </div>

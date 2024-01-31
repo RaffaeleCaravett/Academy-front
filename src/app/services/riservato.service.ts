@@ -42,7 +42,6 @@ export class RiservatoService {
     }
   }
   saveCourse(course:{}){
-
     return this.http.post(environment.API_URL+this.courses,course)
   }
   saveSubject(subject:{}){
@@ -67,16 +66,16 @@ export class RiservatoService {
     return this.http.delete(environment.API_URL+this.users+`/${id}`)
   }
   putCourses(id:number,course:{}){
-    return this.http.get(environment.API_URL+this.courses+`/${id}`,course)
+    return this.http.put(environment.API_URL+this.courses+`/${id}`,course)
   }
   putSubjects(id:number,subject:{}){
-    return this.http.get(environment.API_URL+this.subjects+`/${id}`,subject)
+    return this.http.put(environment.API_URL+this.subjects+`/${id}`,subject)
   }
   putTeachers(id:number,teacher:{}){
-    return this.http.get(environment.API_URL+this.teachers+`/${id}`,teacher)
+    return this.http.put(environment.API_URL+this.teachers+`/${id}`,teacher)
   }
   putUsers(id:number,user:{}){
-    return this.http.get(environment.API_URL+this.users+`/${id}`,user)
+    return this.http.put(environment.API_URL+this.users+`/${id}`,user)
   }
   getCourseById(id:number){
     return this.http.get(environment.API_URL+this.courses+`/${id}`)

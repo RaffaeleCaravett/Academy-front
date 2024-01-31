@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { AuthGuard } from 'src/app/core/auth.guard';
 import { AuthService } from 'src/app/services/auth.service';
 import { RiservatoService } from 'src/app/services/riservato.service';
+import { ModifyComponent } from 'src/app/shared/modify/modify.component';
 
 
 @Component({
@@ -12,8 +14,8 @@ import { RiservatoService } from 'src/app/services/riservato.service';
   styleUrls: ['./riservato.component.scss']
 })
 export class RiservatoComponent implements OnInit, OnDestroy{
-materie:any
-  docenti:any
+materie:any[]=[]
+  docenti:any[]=[]
 reservedForm!:FormGroup
 user:any
 section:string=''
@@ -22,6 +24,8 @@ courses:any
 subjects:any
 teachers:any
 users:any
+teachersSubjects:any[]=[]
+materiePerCorsi:any[]=[]
 fake:any[] = [
   {
     image: 'https://placekitten.com/200/300',
@@ -53,7 +57,7 @@ coursesForm!:FormGroup
 subjectsForm!:FormGroup
 teachersForm!:FormGroup
 usersForm!:FormGroup
-constructor(private reservedService:RiservatoService,private authService:AuthService,private toastr:ToastrService,private authGuard:AuthGuard){}
+constructor(private reservedService:RiservatoService,private authService:AuthService,private toastr:ToastrService,private authGuard:AuthGuard,private matDialog:MatDialog){}
   ngOnDestroy(): void {
 this.user=null
 this.authService.token=''
@@ -298,7 +302,10 @@ ngOnInit(): void {
 this.subjectsForm=new FormGroup({
   nome:new FormControl('', Validators.required)
 })
-
+this.teachersForm=new FormGroup({
+  nome:new FormControl('', Validators.required),
+  materia_id:new FormControl('',Validators.required)
+})
 
   }
 
@@ -312,24 +319,14 @@ this.reservedService.log(
 ).subscribe((tokens:any)=>{
 
 if(tokens){
-this.authService.setToken(tokens.tokens.accessToken)
-this.authService.setRefreshToken(tokens.tokens.refreshToken)
+this.authService.token=tokens.tokens.accessToken
+this.authService.refreshToken=tokens.tokens.refreshToken
 this.authService.verifyToken(this.authService.token).subscribe((user:any)=>{
   this.user=user
 this.toastr.success("Accesso effettuato come " + this.user.nome + " " + this.user.cognome)
 
 
-this.reservedService.getAllCourses().subscribe((courses:any)=>{
-  this.courses=courses})
-  this.reservedService.getAllSubjects().subscribe((subjects:any)=>{
-    this.subjects=subjects})
-  this.reservedService.getAllTeachers().subscribe((teachers:any)=>{
-    this.teachers=teachers})
-    this.reservedService.getAllUsers().subscribe((users:any)=>{
-this.users=users})
-this.reservedService.getAllTeachersList().subscribe((docenti:any)=>{
-  this.docenti=docenti
-})
+this.updatedatas()
 
 },err=>{
 this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tkns:any)=>{
@@ -359,15 +356,33 @@ getAllUsers(page:number){
     this.users=users
   })
 }
+getAllSubjects(page:number){
+  this.reservedService.getAllUsers(page).subscribe((users:any)=>{
+    this.users=users
+  })
+}
+getAllTeachers(page:number){
+  this.reservedService.getAllUsers(page).subscribe((users:any)=>{
+    this.users=users
+  })
+}
 
+checkDocente(d:any){
+  console.log(d)
+}
 insertCourse(){
   if(this.coursesForm.valid){
+    let materie:any[]=[]
+    this.materiePerCorsi.forEach((mat:any)=>{
+      materie.push(mat.id)
+    })
     this.reservedService.saveCourse(
       {
         nome:this.coursesForm.controls['nome'].value,
         prezzo:this.coursesForm.controls['prezzo'].value,
         descrizione:this.coursesForm.controls['descrizione'].value,
-        docente_id:this.coursesForm.controls['docente_id'].value
+        docente_id:[this.coursesForm.controls['docente_id'].value],
+        materia_id:materie
   }
     ).subscribe(
     {
@@ -397,11 +412,29 @@ let docente_id = this.coursesForm.controls['docente_id'].value
 }
 
 updateDocente(docente_id:number){
-  let docente = this.docenti.filter((d:any)=>{
-d.id=docente_id
+  let docente:any;
+  this.docenti.forEach((d:any)=>{
+    if(d.id==docente_id){
+docente=d
+    }
   })
-
   this.materie = docente.materia
+}
+
+updateMateria(materia_id:number){
+   let bool=false
+this.materie.forEach((mat:any)=>{
+  if(mat.id==materia_id){
+    this.materiePerCorsi.forEach((matXCorsi:any)=>{
+if(matXCorsi.id==materia_id){
+  bool=true
+}
+    })
+    if(!bool){
+      this.materiePerCorsi.push(mat)
+    }
+  }
+})
 }
 
 saveSubject(){
@@ -409,7 +442,8 @@ saveSubject(){
     this.reservedService.saveSubject({nome:this.subjectsForm.controls['nome'].value}).subscribe(
       {
         next: (materia: Object) => {
-          this.subjects.content.push(materia)
+          this.toastr.show("Materia salvata")
+          this.updatedatas()
         },
         error: (err: any) => {
           this.toastr.error(err.error.message||"Materia non salvata")
@@ -423,4 +457,100 @@ saveSubject(){
     this.toastr.error("Compila il form")
   }
 }
+
+modifySubject(subject:any){
+const dialogRef = this.matDialog.open(ModifyComponent,{data:[subject,'subject']})
+dialogRef.afterClosed().subscribe((result:any)=>{
+  if(result){
+      this.toastr.success(result)
+      this.updatedatas()
+  }
+})
+}
+saveTeacher(){
+  if(this.teachersForm.controls['nome'].value&&this.teachersSubjects.length!=0){
+    let subjs:any[]=[]
+    this.teachersSubjects.forEach((s:any)=>{
+subjs.push(s.id)
+    })
+    this.reservedService.saveTeacher({nome:this.teachersForm.controls['nome'].value,materia_id:subjs}).subscribe(
+      {
+        next: (materia: Object) => {
+          this.toastr.show("Prof. salvata/0")
+          this.updatedatas()
+          this.teachersForm.reset()
+        },
+        error: (err: any) => {
+          this.toastr.error(err.error.message||"Prof non salvata/o")
+        },
+        complete: () => {
+          this.subjectsForm.reset()
+        }
+      }
+    )
+  }else{
+    this.toastr.error("Compila il form")
+  }
+}
+
+modifyTeacher(teacher:any){
+const dialogRef = this.matDialog.open(ModifyComponent,{data:[teacher,'teacher',this.subjects.content]})
+dialogRef.afterClosed().subscribe((result:any)=>{
+  if(result){
+      this.toastr.success(result)
+      this.updatedatas()
+  }
+})
+}
+
+addToTeachersSubjects(subject:any){
+  this.subjects.content.forEach((s:any)=>{
+    if(s.id==Number(subject)){
+      let bool=false
+      this.teachersSubjects.forEach((s:any)=>{
+        if(s.id==subject){
+          bool=true
+        }
+      })
+      if(!bool){this.teachersSubjects.push(s)}
+    }
+  })
+}
+
+removeTeacherSubject(subject:any){
+  let newSubjs:any[]=[]
+
+this.teachersSubjects.forEach((sub:any)=>{
+ if(sub.id!=subject.id){
+newSubjs.push(sub)
+ }
+})
+this.teachersSubjects=newSubjs
+}
+removeMateriaPerCorso(subject:any){
+  let newSubjs:any[]=[]
+
+this.materiePerCorsi.forEach((sub:any)=>{
+ if(sub.id!=subject){
+newSubjs.push(sub)
+ }
+})
+this.materiePerCorsi=newSubjs
+}
+modifyCourses(corso:any){
+
+}
+updatedatas(){
+  this.reservedService.getAllCourses().subscribe((courses:any)=>{
+    this.courses=courses})
+    this.reservedService.getAllSubjects().subscribe((subjects:any)=>{
+      this.subjects=subjects})
+    this.reservedService.getAllTeachers().subscribe((teachers:any)=>{
+      this.teachers=teachers})
+      this.reservedService.getAllUsers().subscribe((users:any)=>{
+  this.users=users})
+  this.reservedService.getAllTeachersList().subscribe((docenti:any)=>{
+    this.docenti=docenti
+  })
+  }
 }
