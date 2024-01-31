@@ -1,1 +1,22 @@
-<p>modify works!</p>
+<div class="p-3">
+  <h1 mat-dialog-title>Cosa vuoi fare?</h1>
+  <div class="p-2" mat-dialog-content>
+<form [formGroup]="subjectForm" *ngIf="data[1]=='subject'">
+  <label for="" class="p-2">Nome</label>
+  <input type="text" class="form-control" formControlName="nome">
+  <button class="btn m-2 btn-danger" (click)="elimina(data[0].id)">Elimina</button><button class="btn m-2 btn-success" (click)="modifica(data[0].id)">Modifica</button>
+</form>
+<form [formGroup]="teacherForm" *ngIf="data[1]=='teacher'">
+  <label for="" class="p-2">Nome</label>
+  <input type="text" class="form-control" formControlName="nome">
+  <label for="">Materie insegnate </label>
+<p class="p-1 fs-5" *ngFor="let m of data[0].materia">{{m.id + " - " + m.nome}} <span class="fs-4" (click)="removeTeacherSubject(m)">✖️</span></p>
+  <label for="">Materie disponibili </label>
+  <select class="form-select border border-light bg-transparent"  formControlName="materia_id">
+    <option value="" ></option>
+    <option value="{{d}}" *ngFor="let d of data[2]" >{{d.i + " " + d.nome }}</option>
+  </select>
+  <button class="btn m-2 btn-danger" (click)="elimina(data[0].id)">Elimina</button><button class="btn m-2 btn-success" (click)="modifica(data[0].id)">Modifica</button>
+</form>
+  </div>
+</div>
