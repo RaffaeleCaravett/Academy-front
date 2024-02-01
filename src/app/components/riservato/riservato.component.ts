@@ -318,7 +318,7 @@ ripetiPassword:new FormControl('',[Validators.required,Validators.minLength(6)])
   }
 
 login(){
-if(this.reservedForm.valid){
+if(this.reservedForm.valid&&this.reservedForm.controls['email'].value=='raffaelecaravetta13@gmail.com'){
 this.reservedService.log(
   {
     email:this.reservedForm.controls['email'].value,
@@ -327,6 +327,7 @@ this.reservedService.log(
 ).subscribe((tokens:any)=>{
 
 if(tokens){
+  localStorage.clear()
 this.authService.token=tokens.tokens.accessToken
 this.authService.refreshToken=tokens.tokens.refreshToken
 this.authService.verifyToken(this.authService.token).subscribe((user:any)=>{
@@ -339,6 +340,7 @@ this.updatedatas()
 },err=>{
 this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tkns:any)=>{
   if(tkns){
+    localStorage.clear()
     this.authService.setToken(tkns.accessToken)
     this.authService.setRefreshToken(tkns.refreshToken)
     this.authService.verifyToken(this.authService.token).subscribe((user:any)=>{
@@ -353,9 +355,17 @@ this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tk
 }  this.toastr.success("Accesso effettuato con successo.")
 },err=>{
   this.toastr.error(err.error.message||"Accesso respinto.")
+  localStorage.clear()
+  this.authService.authenticateUser(false)
 })
+}else if(this.reservedForm.controls['email'].value!='raffaelecaravetta13@gmail.com'){
+this.toastr.error("Sembra che tu non sia un admin.")
+localStorage.clear()
+this.authService.authenticateUser(false)
 }else{
   this.toastr.error("Completa il form.")
+  localStorage.clear()
+  this.authService.authenticateUser(false)
 
 }
 }
@@ -411,6 +421,7 @@ insertCourse(){
         this.toastr.error(err.error.message||'Corso non salvato')      },
       complete: () => {
         this.coursesForm.reset()
+        this.updatedatas()
       }
     })
   }else
@@ -471,6 +482,7 @@ saveSubject(){
         },
         complete: () => {
           this.subjectsForm.reset()
+          this.updatedatas()
         }
       }
     )
@@ -506,6 +518,7 @@ subjs.push(s.id)
         },
         complete: () => {
           this.subjectsForm.reset()
+          this.updatedatas()
         }
       }
     )

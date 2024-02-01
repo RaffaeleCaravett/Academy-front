@@ -12,12 +12,23 @@ import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.compone
 export class CorsiComponent implements AfterViewInit, OnInit{
   search!:FormGroup
 corsi:any
+user:any
+preferiti:any
 
 constructor(private matDialog: MatDialog, private corsoService: CorsiService){}
   ngOnInit(): void {
     this.search = new FormGroup({
       search: new FormControl('',Validators.required)
       })
+  if(localStorage.getItem('user')){
+        this.user=JSON.parse(localStorage.getItem('user')!)
+        if(this.user){
+this.corsoService.getPreferitiByUserId(this.user.id).subscribe((preferiti:any)=>{
+  this.preferiti=preferiti
+})
+}
+  }
+
 
     }
 
@@ -30,6 +41,19 @@ constructor(private matDialog: MatDialog, private corsoService: CorsiService){}
 showCourse(course:any){
 const dialogRef= this.matDialog.open(ShowCorsoComponent,{data:[course]})
 
-dialogRef.afterClosed().subscribe((data:any)=>{})
+dialogRef.afterClosed().subscribe((data:any)=>{
+if(data=='preferiti')
+{
+  if(!this.preferiti){
+this.corsoService.savePreferiti(
+    {
+
+    }
+  )
+  }else{
+this.corsoService.putPreferitiById(this.preferiti.id,{})
+  }
+}
+})
 }
 }

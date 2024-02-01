@@ -10,6 +10,16 @@
     <button class="m-4 px-5 py-3">Search</button>
     </form>
    </div>
+   <div class="col-md-12 overflow-auto d-flex text-white" *ngIf="preferiti">
+    <p class="fs-4" >{{preferiti.user.nome + " " + preferiti.user.cognome}}</p>
+    <div class="w-25 p-1 darker rounded" *ngFor="let p of preferiti.corso">
+    <h2>p.nome</h2>
+<p>{{p.descrizione}}</p>
+<p>{{p.docente.nome}}</p>
+<p>{{p.prezzo}}</p>
+    </div>
+   </div>
+    <div class="w-100 fs-5 text-white" *ngIf="!preferiti">{{user.nome}}, Non hai nessun corso nei preferiti ancora.</div>
    <div class="col-md-12 py-5">
 <div class="row" *ngIf="corsi&&corsi.content">
   <div class="col-md-4 p-5" *ngFor="let c of corsi.content;index as i">

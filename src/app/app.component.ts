@@ -12,7 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 export class AppComponent  implements AfterViewInit {
 
   title = 'academy';
-
 constructor(private router:Router,private authService:AuthService, private toastr:ToastrService){}
 
   ngAfterViewInit(): void {
