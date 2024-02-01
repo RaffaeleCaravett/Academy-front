@@ -5,7 +5,6 @@ import { CorsiComponent } from './corsi.component';
 import { CorsiRoutingModule } from './corsi-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgxPayPalModule } from 'ngx-paypal';
 
 
 @NgModule({
@@ -18,7 +17,6 @@ CorsiComponent,
     CorsiRoutingModule,
     ReactiveFormsModule,
     MatDialogModule,
-    NgxPayPalModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

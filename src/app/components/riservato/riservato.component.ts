@@ -352,19 +352,25 @@ this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tk
 
 }
 }
+getAllCourses(page:number){
+  this.reservedService.getAllCourses(page).subscribe((courses:any)=>{
+    this.courses=courses
+  })
+}
 getAllUsers(page:number){
   this.reservedService.getAllUsers(page).subscribe((users:any)=>{
     this.users=users
   })
 }
 getAllSubjects(page:number){
-  this.reservedService.getAllUsers(page).subscribe((users:any)=>{
-    this.users=users
+  console.log('ihih')
+  this.reservedService.getAllSubjects(page).subscribe((subjects:any)=>{
+    this.subjects=subjects
   })
 }
 getAllTeachers(page:number){
-  this.reservedService.getAllUsers(page).subscribe((users:any)=>{
-    this.users=users
+  this.reservedService.getAllTeachers(page).subscribe((teachers:any)=>{
+    this.teachers=teachers
   })
 }
 

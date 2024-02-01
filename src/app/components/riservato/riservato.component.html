@@ -220,6 +220,10 @@
 <p><span class="p-1 fs-5" *ngFor="let m of c.materia">{{m.nome}}</span></p>
         </div>
   </div>
+  <p>
+    <span class="btn mx-2 fs-3" *ngIf="courses.number!=0" (click)="getAllCourses(courses.number-1)">⬅️</span>
+    <span class="btn mx-2 fs-3" *ngIf="courses.number!=courses.totalPages-1&&courses.totalPages!=0" (click)="getAllCourses(courses.number+1)">➡️</span>
+  </p>
 </div>
   </div>
 </div>
@@ -245,7 +249,7 @@
   </div>
   <p>
     <span class="btn mx-2 fs-3" *ngIf="subjects.number!=0" (click)="getAllSubjects(subjects.number-1)">⬅️</span>
-    <span class="btn mx-2 fs-3" *ngIf="subjects.number!=subjects.totalPages-1" (click)="getAllSubjects(subjects.number+1)">➡️</span>
+    <span class="btn mx-2 fs-3" *ngIf="subjects.number!=subjects.totalPages-1&&subjects.totalPages!=0" (click)="getAllSubjects(subjects.number+1)">➡️</span>
   </p>
 </div>
   </div>
@@ -286,7 +290,7 @@
       </div>
       <p>
         <span class="btn mx-2 fs-3" *ngIf="teachers.number!=0" (click)="getAllTeachers(teachers.number-1)">⬅️</span>
-        <span class="btn mx-2 fs-3" *ngIf="teachers.number!=subjects.totalPages-1" (click)="getAllTeachers(teachers.number+1)">➡️</span>
+        <span class="btn mx-2 fs-3" *ngIf="teachers.number!=teachers.totalPages-1&&teachers.totalPages!=0" (click)="getAllTeachers(teachers.number+1)">➡️</span>
       </p>
     </div>
       </div>
@@ -309,7 +313,7 @@
       </div>
       <p>
         <span class="btn mx-2 fs-3" *ngIf="users.number!=0" (click)="getAllUsers(users.number-1)">⬅️</span>
-        <span class="btn mx-2 fs-3" *ngIf="users.number!=subjects.totalPages-1" (click)="getAllUsers(users.number+1)">➡️</span>
+        <span class="btn mx-2 fs-3" *ngIf="users.number!=users.totalPages-1&&users.totalPages!=0" (click)="getAllUsers(users.number+1)">➡️</span>
       </p>
  </div>
   </div>

@@ -20,14 +20,26 @@ export class RiservatoService {
     return this.http.post(environment.API_URL+this.login,log)
   }
 
-  getAllCourses(){
+  getAllCourses(page?:number){
+    if(!page){
     return this.http.get(environment.API_URL+this.courses)
+    }else{
+    return this.http.get(environment.API_URL+this.courses+`?page=${page}`)
   }
-  getAllSubjects(){
+  }
+  getAllSubjects(page?:number){
+    if(!page){
     return this.http.get(environment.API_URL+this.subjects)
+    }else{
+    return this.http.get(environment.API_URL+this.subjects+`?page=${page}`)
   }
-  getAllTeachers(){
+  }
+  getAllTeachers(page?:number){
+   if(!page){
     return this.http.get(environment.API_URL+this.teachers)
+  }else{
+    return this.http.get(environment.API_URL+this.teachers+`?page=${page}`)
+  }
   }
   getAllTeachersList(){
     return this.http.get(environment.API_URL+this.teachers+'/list')
@@ -35,10 +47,8 @@ export class RiservatoService {
   getAllUsers(page?:number){
     if(!page){
           return this.http.get(environment.API_URL+'/auth'+this.users)
-          console.log(1)
     }else{
       return this.http.get(environment.API_URL+'/auth'+this.users+`?page=${page}`)
-      console.log(2)
     }
   }
   saveCourse(course:{}){
