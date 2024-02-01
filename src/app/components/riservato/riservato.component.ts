@@ -608,7 +608,7 @@ this.reservedService.saveUser(
      this.reservedService.deleteUser(user.id).subscribe((data:any)=>{
 
         this.toastr.success("User eliminato")
-        this.updatedatas
+        this.updatedatas()
 
     },err=>{
       this.toastr.error(err.error.message||"User non eliminato")

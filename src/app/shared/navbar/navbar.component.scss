@@ -8,4 +8,17 @@ box-shadow: rgb(12, 250, 12);
   color:white
 }
 }
+
+
+}
+@media screen and (max-width: 1200px) {
+  .text-center{
+display: none;}
+
+}
+@media screen and (min-width: 1200px) {
+
+  .p-2{
+display: none;
+}
 }

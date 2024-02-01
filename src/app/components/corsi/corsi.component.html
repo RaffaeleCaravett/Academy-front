@@ -11,18 +11,18 @@
     </form>
    </div>
    <div class="col-md-12 py-5">
-<div class="row">
-  <div class="col-md-4 p-5" *ngFor="let c of corso;index as i">
+<div class="row" *ngIf="corsi&&corsi.content">
+  <div class="col-md-4 p-5" *ngFor="let c of corsi.content;index as i">
     <div class="p-3">
         <div class="py-3 " [ngClass]="i%2==0?'even':'odd'">
-      <h2 class="fs-2 fw-bold" data-aos="zoom-in" data-aos-duration="3000">{{cors[0].title}}</h2>
-<img src="{{cors[0].img}}" alt="" class="w-100">
-<p class="fs-5">Svolto da {{cors[0].autore.nome}}</p>
+      <h2 class="fs-2 fw-bold" data-aos="zoom-in" data-aos-duration="3000">{{c.nome}}</h2>
+<img src="assets/logo/crown.png" alt="" class="w-100">
+<p class="fs-5">Svolto da {{c.docente.nome}}</p>
 <label for="">Categorie</label>
 <select class="form-select bg-transparent w-75 m-auto my-2">
-  <option value="" *ngFor="let c of cors[0].categoriaList">{{c.nome}}</option>
+  <option value="" *ngFor="let c of c.materia">{{c.nome}}</option>
 </select>
-<button class="m-2 px-4 py-2" (click)="showCourse(cors[0])">Anteprima</button>
+<button class="m-2 px-4 py-2" (click)="showCourse(c)">Anteprima</button>
 </div>
     </div>
   </div>

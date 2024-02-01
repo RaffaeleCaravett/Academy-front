@@ -34,6 +34,7 @@ this.token=token
 this.authGuard.authenticateUser(bool||undefined)
               }
               verifyToken(token:string){
+                console.log(token)
                 return this.http.get(environment.API_URL+'/auth/'+token)
               }
               verifyRefreshToken(refreshToken:string){

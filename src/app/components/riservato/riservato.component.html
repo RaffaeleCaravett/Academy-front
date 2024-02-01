@@ -17,6 +17,10 @@
 <label for="" class="p-4 m-1 fs-3 fw-bold">Password</label>
 <input type="password" class="form-control bg-transparent m-auto" formControlName="password">
 <button class="px-5 py-2 m-2" (click)="login()">LOGIN</button>
+<p class="text-center fw-bold"> OR</p>
+
+<p class="text-center fw-bold"> AREN'T YOU AN ADMIN?</p>
+<button class="px-5 py-2 m-2" [routerLink]="'/'">GO TO USER FORMS</button>
     </form>
     </div>
 <div class="col-md-12" *ngIf="user">
