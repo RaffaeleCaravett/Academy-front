@@ -419,10 +419,12 @@ insertCourse(){
   }
 }
 searchCourse(){
+
 let nome= this.coursesForm.controls['nome'].value
 let descrizione = this.coursesForm.controls['descrizione'].value
 let prezzo = this.coursesForm.controls['prezzo'].value
 let docente_id = this.coursesForm.controls['docente_id'].value
+console.log(nome,descrizione,prezzo,docente_id)
   this.reservedService.getCoursesByParams(
     nome,descrizione,prezzo,docente_id
   ).subscribe((courses:any)=>{
@@ -572,7 +574,8 @@ updatedatas(){
     this.reservedService.getAllTeachers().subscribe((teachers:any)=>{
       this.teachers=teachers})
       this.reservedService.getAllUsers().subscribe((users:any)=>{
-  this.users=users})
+  this.users=users
+console.log(this.user)})
   this.reservedService.getAllTeachersList().subscribe((docenti:any)=>{
     this.docenti=docenti
   })
@@ -599,5 +602,20 @@ this.reservedService.saveUser(
 }else{
   this.toastr.error("Completa il form o assicurati che le password coincidano")
 }
+  }
+  deleteUser(user:any){
+    if(user.id!=1){
+     this.reservedService.deleteUser(user.id).subscribe((data:any)=>{
+
+        this.toastr.success("User eliminato")
+        this.updatedatas
+
+    },err=>{
+      this.toastr.error(err.error.message||"User non eliminato")
+    })
+    }else{
+      this.toastr.error("Non puoi eliminare l'admin.")
+    }
+
   }
 }

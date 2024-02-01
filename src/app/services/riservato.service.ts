@@ -61,7 +61,7 @@ export class RiservatoService {
     return this.http.post(environment.API_URL+this.teachers,teacher)
   }
   saveUser(user:{}){
-    return this.http.post(environment.API_URL+this.users,user)
+    return this.http.post(environment.API_URL+'/auth/register',user)
   }
   deleteCourse(id:number){
     return this.http.delete(environment.API_URL+this.courses+`/${id}`)

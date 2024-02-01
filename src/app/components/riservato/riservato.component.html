@@ -307,13 +307,13 @@
 <input type="text" class="form-control bg-transparent" formControlName="cognome">
 <label for="">Email</label>
 <input type="text" class="form-control bg-transparent" formControlName="email">
-<label for="">Età</label>
+<label for="">Età (min. 18)</label>
 <input type="text" class="form-control bg-transparent" formControlName="eta">
-<label for="">Password</label>
+<label for="">Password (min. 6 caratteri)</label>
 <input type="password" class="form-control bg-transparent" formControlName="password">
-<label for="">Ripeti Password</label>
+<label for="">Ripeti Password (min. 6 caratteri)</label>
 <input type="password" class="form-control bg-transparent" formControlName="ripetiPassword">
-<p class="p-1 text-center"><span class="btn" (click)="aggiungiUtente()">Aggiungi utente</span></p>
+<p class="p-1 text-center"><span class="btn fs-5 text-white" (click)="aggiungiUtente()">Aggiungi utente</span></p>
 </form>
   </div>
   <div class="col-md-8 p-2">
@@ -321,7 +321,8 @@
   <h2 *ngIf="users.content.length==0">Non ci sono users</h2>
   <div class="col-md-4 p-2" *ngFor="let s of users.content">
         <div class="rounded darker p-1">
-        <h2>{{s.id - s.nome + " " + s.cognome}}</h2>
+          <p class="text-end p-2"><span class="btn fs-4" (click)="deleteUser(s)">❌</span></p>
+        <h2>{{s.id + " - " + s.nome + " " + s.cognome}}</h2>
         <p>{{s.email}}</p>
         <p>{{s.eta}}</p>
         <p>{{s.role}}</p>
