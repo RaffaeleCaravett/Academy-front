@@ -1,20 +1,20 @@
 <div class="container text-center">
   <div class="row py-5 p-0">
-    <div class="col-md-3">
-       <span>💀</span>
+    <div class="col-md-3 my-3">
+       <span class="p-4 ">💀</span>
     </div>
     <div class="col-md-6">
        <h1> Reserved area </h1>
        <p class="fs-4 text-danger">Attempt to login only if you have an 'Admin' role.</p>
     </div>
-    <div class="col-md-3">
-<span>💀</span>
+    <div class="col-md-3 my-3">
+<span class="p-4">💀</span>
     </div>
     <div class="col-md-12 py-5" *ngIf="!user">
        <form [formGroup]="reservedForm" class="p-4 w-50 m-auto">
-      <label for="" class="py-4 fs-3 fw-bold">Email</label>
+      <label for="" class="p-4 m-1 fs-3 fw-bold">Email</label>
 <input type="text" class="form-control bg-transparent m-auto" formControlName="email">
-<label for="" class="py-4 fs-3 fw-bold">Password</label>
+<label for="" class="p-4 m-1 fs-3 fw-bold">Password</label>
 <input type="password" class="form-control bg-transparent m-auto" formControlName="password">
 <button class="px-5 py-2 m-2" (click)="login()">LOGIN</button>
     </form>
@@ -27,25 +27,25 @@
     <img src="assets/logo/academy.png" alt="" style="max-height: 100px; width: 220px;">
   </div>
   <div class="col-md-12 py-2">
-  <p class="p-2 to-hover" (click)="section='courses'">
+  <p class="p-2 to-hover" (click)="section='courses';updatedatas()">
     <span class="fs-5">Courses</span>
 
 </p>
   </div>
   <div class="col-md-12 py-2">
-  <p class="p-2 to-hover" (click)="section='subjects'">
+  <p class="p-2 to-hover" (click)="section='subjects';updatedatas()">
     <span class="fs-5">Subjects</span>
 
 </p>
   </div>
   <div class="col-md-12 py-2">
-  <p class="p-2 to-hover" (click)="section='teachers'">
+  <p class="p-2 to-hover" (click)="section='teachers';updatedatas()">
     <span class="fs-5">Teachers</span>
 
 </p>
   </div>
   <div class="col-md-12 py-2">
-  <p class="p-2 to-hover" (click)="section='users'">
+  <p class="p-2 to-hover" (click)="section='users';updatedatas()">
     <span class="fs-5">Users</span>
 
 </p>
@@ -209,7 +209,7 @@
   </div>
   <div class="col-md-8 p-2">
     <div class="row darker rounded w-100">
-      <h2 *ngIf="courses.content.length==0" class="text-white">Non ci sono corsi</h2>
+      <h2 *ngIf="courses &&courses.content.length==0" class="text-white">Non ci sono corsi</h2>
       <div class="col-md-4 p-2 text-white" *ngFor="let c of courses.content" (click)="checkDocente(c)">
         <div class="darker rounded p-1">
           <p class="p-2 text-end"><span class="btn fs-4" (click)="modifyCourses(c)">⚙️</span></p>
@@ -301,7 +301,19 @@
   <div class="col-md-4 p-2">
     <h2 class="text-white">Form di inserimento/ricerca/modifica</h2>
 <form [formGroup]="usersForm" class="p-2 darker rounded">
-
+<label for="">Nome</label>
+<input type="text" class="form-control bg-transparent" formControlName="nome">
+<label for="">Cognome</label>
+<input type="text" class="form-control bg-transparent" formControlName="cognome">
+<label for="">Email</label>
+<input type="text" class="form-control bg-transparent" formControlName="email">
+<label for="">Età</label>
+<input type="text" class="form-control bg-transparent" formControlName="eta">
+<label for="">Password</label>
+<input type="password" class="form-control bg-transparent" formControlName="password">
+<label for="">Ripeti Password</label>
+<input type="password" class="form-control bg-transparent" formControlName="ripetiPassword">
+<p class="p-1 text-center"><span class="btn" (click)="aggiungiUtente()">Aggiungi utente</span></p>
 </form>
   </div>
   <div class="col-md-8 p-2">
@@ -309,6 +321,11 @@
   <h2 *ngIf="users.content.length==0">Non ci sono users</h2>
   <div class="col-md-4 p-2" *ngFor="let s of users.content">
         <div class="rounded darker p-1">
+        <h2>{{s.id - s.nome + " " + s.cognome}}</h2>
+        <p>{{s.email}}</p>
+        <p>{{s.eta}}</p>
+        <p>{{s.role}}</p>
+
                   </div>
       </div>
       <p>

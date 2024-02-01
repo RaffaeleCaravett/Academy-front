@@ -99,8 +99,8 @@ export class RiservatoService {
   getUserById(id:number){
     return this.http.get(environment.API_URL+this.users+`/${id}`)
   }
-  getCoursesByParams(nome?:string,descrizione?:string,prezzo?:number,docente_id?:number,materia_id?:number){
-  return this.http.get(environment.API_URL+this.courses+`/params?nome=${nome||''}&prezzo=${prezzo||''}&descrizione=${descrizione||''}&docente_id=${docente_id||''}&materia_id=${materia_id||''}`)
+  getCoursesByParams(nome?:string,descrizione?:string,prezzo?:number,docente_id?:number){
+  return this.http.get(environment.API_URL+this.courses+`/params?name=${nome||''}&price=${prezzo||0}&descrizione=${descrizione||''}&docente=${docente_id||0}`)
   }
 
 }

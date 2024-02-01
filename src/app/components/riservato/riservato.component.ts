@@ -307,7 +307,14 @@ this.teachersForm=new FormGroup({
   nome:new FormControl('', Validators.required),
   materia_id:new FormControl('',Validators.required)
 })
-
+this.usersForm=new FormGroup({
+  nome: new FormControl('',[Validators.required,Validators.minLength(2)]),
+  cognome: new FormControl('',[Validators.required,Validators.minLength(2)]),
+  email:new FormControl('',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+  eta:new FormControl('',[Validators.required,Validators.min(18)]),
+password:new FormControl('',[Validators.required,Validators.minLength(6)]),
+ripetiPassword:new FormControl('',[Validators.required,Validators.minLength(6)])
+})
   }
 
 login(){
@@ -394,11 +401,16 @@ insertCourse(){
     ).subscribe(
     {
       next: (data: Object) => {
-        this.courses.content.push(data)
+        if(data){
+           this.courses.content.push(data)
+        this.materiePerCorsi=[]
+        this.materie=[]
+        }
       },
       error: (err: any) => {
         this.toastr.error(err.error.message||'Corso non salvato')      },
       complete: () => {
+        this.coursesForm.reset()
       }
     })
   }else
@@ -564,5 +576,28 @@ updatedatas(){
   this.reservedService.getAllTeachersList().subscribe((docenti:any)=>{
     this.docenti=docenti
   })
+  }
+  aggiungiUtente(){
+if(this.usersForm.valid&&this.usersForm.controls['password'].value==this.usersForm.controls['ripetiPassword'].value){
+this.reservedService.saveUser(
+  {
+    nome:this.usersForm.controls['nome'].value,
+    cognome:this.usersForm.controls['cognome'].value,
+    email:this.usersForm.controls['email'].value,
+    eta:this.usersForm.controls['eta'].value,
+    password:this.usersForm.controls['password'].value
+  }
+).subscribe((user:any)=>{
+  if(user){
+    this.toastr.success("User inserito")
+    this.updatedatas()
+  this.usersForm.reset()
+  }
+},err=>{
+  this.toastr.error(err.error.message||"User non inserito")
+})
+}else{
+  this.toastr.error("Completa il form o assicurati che le password coincidano")
+}
   }
 }
