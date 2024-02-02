@@ -47,13 +47,46 @@ if(data=='preferiti')
   if(!this.preferiti){
 this.corsoService.savePreferiti(
     {
-
+user_id:this.user.id,
+corso_id:[course.id]
     }
-  )
+  ).subscribe((preferiti:any)=>{
+    this.preferiti=preferiti
+  })
   }else{
-this.corsoService.putPreferitiById(this.preferiti.id,{})
+    let preferiti:any[]=[]
+    this.preferiti.corso.forEach((corso:any)=>{
+      preferiti.push(corso.id)
+    })
+
+    preferiti.push(course.id)
+this.corsoService.putPreferitiById(this.preferiti.id,
+  {
+    user_id:this.user.id,
+    corso_id:preferiti
+  }).subscribe((preferiti:any)=>{
+    this.preferiti=preferiti
+  })
   }
 }
 })
+}
+removeItemFromPreferiti(cors:any){
+let newPreferiti:any[]=[]
+this.preferiti.corso.forEach((corso:any)=>{
+  if(corso.id!=cors.id){
+    newPreferiti.push(corso.id)
+  }
+})
+this.corsoService.putPreferitiById(this.preferiti.id,
+  {
+    user_id:this.user.id,
+    corso_id:newPreferiti
+  }).subscribe((preferiti:any)=>{
+    this.preferiti=preferiti
+  })
+}
+svuotaPreferiti(){
+this.corsoService.svuotaPreferitiById(this.preferiti.id).subscribe((preferiti:any)=>{this.preferiti=preferiti})
 }
 }

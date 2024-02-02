@@ -10,10 +10,12 @@
     <button class="m-4 px-5 py-3">Search</button>
     </form>
    </div>
+    <p class="fs-4 text-white" *ngIf="preferiti">{{preferiti.user.nome + " " + preferiti.user.cognome}} , preferiti :</p>
+    <p class="fs-4 text-white text-end" *ngIf="preferiti" (click)="svuotaPreferiti()"> Svuota preferiti : 🗑️</p>
    <div class="col-md-12 overflow-auto d-flex text-white" *ngIf="preferiti">
-    <p class="fs-4" >{{preferiti.user.nome + " " + preferiti.user.cognome}}</p>
-    <div class="w-25 p-1 darker rounded" *ngFor="let p of preferiti.corso">
-    <h2>p.nome</h2>
+    <div class="w-25 p-1 m-1 darker rounded" *ngFor="let p of preferiti.corso">
+      <p class="p-1 text-end fs-5" (click)="removeItemFromPreferiti(p)">❌</p>
+    <h2>{{preferiti.user.nome}}</h2>
 <p>{{p.descrizione}}</p>
 <p>{{p.docente.nome}}</p>
 <p>{{p.prezzo}}</p>
