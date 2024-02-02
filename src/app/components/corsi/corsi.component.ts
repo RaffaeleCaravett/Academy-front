@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { CorsiService } from 'src/app/services/corsi.service';
 import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.component';
 
@@ -14,8 +15,8 @@ export class CorsiComponent implements AfterViewInit, OnInit{
 corsi:any
 user:any
 preferiti:any
-
-constructor(private matDialog: MatDialog, private corsoService: CorsiService){}
+carrello:any
+constructor(private matDialog: MatDialog, private corsoService: CorsiService,private toastr:ToastrService){}
   ngOnInit(): void {
     this.search = new FormGroup({
       search: new FormControl('',Validators.required)
@@ -26,6 +27,14 @@ constructor(private matDialog: MatDialog, private corsoService: CorsiService){}
 this.corsoService.getPreferitiByUserId(this.user.id).subscribe((preferiti:any)=>{
   this.preferiti=preferiti
 })
+this.corsoService.getCarrelloByUserId(this.user.id).subscribe((carrello:any)=>{
+  if(carrello){
+    this.carrello=carrello
+  }
+},err=>{
+  this.toastr.error(err.error.message||"Carrello non trovato per questo utente")
+});
+
 }
   }
 
@@ -88,5 +97,41 @@ this.corsoService.putPreferitiById(this.preferiti.id,
 }
 svuotaPreferiti(){
 this.corsoService.svuotaPreferitiById(this.preferiti.id).subscribe((preferiti:any)=>{this.preferiti=preferiti})
+}
+aggiungiAlCarrello(prodotto:any){
+if(this.carrello){
+  let corsi:any[]=[]
+  this.carrello.corso.forEach((c:any)=>{
+    corsi.push(c.id)
+  })
+  corsi.push(prodotto.id)
+  this.corsoService.updateCarrelloById(this.carrello.id,{
+    user_id:this.user.id,
+    corso_id:corsi
+  }).subscribe((carrello:any)=>{
+    this.carrello=carrello
+    this.toastr.success("Prodotto aggiunto al carrello")
+  },err=>{this.toastr.error(err.error.message||"C'è stato un problema nel salvataggio del carrello")})
+}else{
+  this.corsoService.saveCarrello({
+    user_id:this.user.id,
+    corso_id:[prodotto.id]
+  }).subscribe((carrello:any)=>{
+    this.carrello=carrello
+    this.toastr.success("Prodotto aggiunto al carrello")
+  },err=>{this.toastr.error(err.error.message||"C'è stato un problema nel salvataggio del carrello")})
+}
+}
+removeFromCarrello(corso:any){
+  let corsi:any[]=[]
+  this.carrello.corso.forEach((c:any)=>{
+    if(c.id!=corso.id){
+      corsi.push(c.id)
+    }
+  })
+this.corsoService.updateCarrelloById(this.carrello.id,{user_id:this.user.id,corso_id:corsi}).subscribe((carrello:any)=>{this.carrello=carrello})
+}
+svuotaCarrello(carrelloId:number){
+this.corsoService.svuotaCarrello(carrelloId).subscribe((carrello:any)=>{this.carrello=carrello})
 }
 }

@@ -10,6 +10,18 @@
     <button class="m-4 px-5 py-3">Search</button>
     </form>
    </div>
+   <div class="p-2 row text-center" *ngIf="carrello&&carrello.corso.length>0">
+<div class="col-md-8"></div>
+    <div class="col-md-4 p-2">
+  <div class="darker rounded p-1">
+    <p class="text-end text-white" (click)="svuotaCarrello(carrello.id)">Svuota</p>
+<h2>Carrello</h2>
+<div *ngFor="let c of carrello.corso">
+<p>{{c.nome}}  <span class="p-1 text-end fs-5" (click)="removeFromCarrello(c)">❌</span></p>
+</div>
+  </div>
+</div>
+   </div>
     <p class="fs-4 text-white" *ngIf="preferiti">{{preferiti.user.nome + " " + preferiti.user.cognome}} , preferiti :</p>
     <p class="fs-4 text-white text-end" *ngIf="preferiti&&preferiti.corso.length>0" (click)="svuotaPreferiti()"> Svuota preferiti : 🗑️</p>
    <div class="col-md-12 overflow-auto d-flex text-white" *ngIf="preferiti">
@@ -19,6 +31,7 @@
 <p>{{p.descrizione}}</p>
 <p>{{p.docente.nome}}</p>
 <p>{{p.prezzo}}</p>
+<p (click)="aggiungiAlCarrello(p)">Aggiungi prodotto al carrello</p>
     </div>
    </div>
     <div class="w-100 fs-5 text-white" *ngIf="!preferiti">{{user.nome}}, Non hai nessun corso nei preferiti ancora.</div>
