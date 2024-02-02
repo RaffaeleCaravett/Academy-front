@@ -1,11 +1,12 @@
-<div class="container text-center">
+<div class="container text-center text-white">
   <div class="row">
     <div class="col-md-12">
         <h1>La tua dashboard</h1>
     </div>
   <div class="col-md-12 p-2 darker rounded">
 <div class="row p-3 w-100">
-  <div class="col-md-3 darker text-white p-2 rounded text-center border">
+  <div class="col-md-3 p-2">
+    <div class="p-2 darker rounded border">
 <img src="assets/logo/crown.png" alt="" class="w-75 m-auto">
 <h2>{{user.nome + " " + user.cognome}}</h2>
 <p class="fs-5">Anni : {{user.eta}}</p>
@@ -13,6 +14,46 @@
 <ul>
   <li>{{user.email}}</li>
 </ul>
+    </div>
+  </div>
+  <div class="col-md-9 p-2 rounded">
+    <div class="row w-100">
+      <div class="col-md-12 p-2">
+        <div class="p-2 darker border rounded">
+         <h2>A bit about you</h2>
+        </div>
+      </div>
+      <div class="col-md-4 p-2">
+        <div class="p-2 darker rounded border">
+<h2>Acquisti effettuati : </h2>
+<p class="fs-4" >{{acquisti?.length||0}}</p>
+        </div>
+      </div>
+      <div class="col-md-4 p-2">
+        <div class="p-2 darker rounded border">
+<h2>Corsi nel carrello : </h2>
+<p class="fs-4" >{{carrello?.corso.length||0}}</p>
+        </div>
+      </div>
+      <div class="col-md-4 p-2">
+        <div class="p-2 darker rounded border">
+<h2>Corsi nei preferiti :</h2>
+<p class="fs-4" *ngIf="preferiti">{{preferiti.corso.length}}</p>
+        </div>
+      </div>
+      <div class="col-md-12 p-2">
+        <div class="rounded border darker p-2">
+<h2>A cosa ti sei interessata/o?</h2>
+<div class="row" *ngIf="preferiti">
+  <div class="col-md-4 p-2" *ngFor="let c of preferiti.corso">
+  <span class="p-1" *ngFor="let m of c.materia">{{ m.nome}} ,</span></div>
+</div>
+<div class="row">
+  <div class="col-md-12" *ngIf="!preferiti||preferiti.corso.length==0">Non ti sei interessato a niente</div>
+</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
   </div>

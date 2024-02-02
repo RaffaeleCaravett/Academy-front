@@ -12,7 +12,7 @@ export class RiservatoService {
   private subjects:string = '/materia'
   private teachers:string = '/docente'
   private users:string = '/user'
-
+private acquisti:string = '/acquisti'
 
   constructor(private http:HttpClient) { }
 
@@ -102,5 +102,7 @@ export class RiservatoService {
   getCoursesByParams(nome?:string,descrizione?:string,prezzo?:number,docente_id?:number){
   return this.http.get(environment.API_URL+this.courses+`/params?name=${nome||''}&price=${prezzo||0}&descrizione=${descrizione||''}&docente=${docente_id||0}`)
   }
-
+getAllAcquisti(){
+  return this.http.get(environment.API_URL+this.acquisti)
+}
 }
