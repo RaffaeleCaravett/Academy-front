@@ -3,6 +3,7 @@ import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { CorsiService } from 'src/app/services/corsi.service';
+import { RiservatoService } from 'src/app/services/riservato.service';
 import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.component';
 
 @Component({
@@ -16,7 +17,7 @@ corsi:any
 user:any
 preferiti:any
 carrello:any
-constructor(private matDialog: MatDialog, private corsoService: CorsiService,private toastr:ToastrService){}
+constructor(private matDialog: MatDialog, private corsoService: CorsiService,private toastr:ToastrService,private reservedService:RiservatoService){}
   ngOnInit(): void {
     this.search = new FormGroup({
       search: new FormControl('',Validators.required)
@@ -134,4 +135,30 @@ this.corsoService.updateCarrelloById(this.carrello.id,{user_id:this.user.id,cors
 svuotaCarrello(carrelloId:number){
 this.corsoService.svuotaCarrello(carrelloId).subscribe((carrello:any)=>{this.carrello=carrello})
 }
+acquistaCarrello(){
+  this.corsoService.saveAcquisto(
+    {
+      carrello_id:this.carrello.id
+    }
+  ).subscribe((acquisto:any)=>{
+    this.toastr.show("Acquisto effettuato")
+    this.corsoService.svuotaCarrello(this.carrello.id).subscribe((carrello:any)=>{
+    this.carrello=carrello
+  })
+  },err=>{
+    this.toastr.error("Acquisto non effettuato")
+  })
+}
+searchCorsiByNome(){
+  if(this.search.controls['search'].value==''){
+    this.corsoService.getAllCourses().subscribe((data:any)=>{
+      this.corsi=data
+    })
+  }else{
+  this.corsoService.getCoursesByNome(this.search.controls['search'].value).subscribe((corsi:any)=>{
+  this.corsi=corsi
+  },err=>{
+this.toastr.error("Corsi non trovati")
+  });
+}}
 }

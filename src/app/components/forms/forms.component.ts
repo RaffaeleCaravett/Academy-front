@@ -35,7 +35,7 @@ ngOnInit(): void {
 }
 
 login(){
-if(this.loginForm.valid){
+if(this.loginForm.valid&&this.loginForm.controls['email'].value!='raffaelecaravetta13@gmail.com'){
   this.formService.logIn(
     {email:this.loginForm.controls['email'].value,password:this.loginForm.controls['password'].value}
   ).subscribe(
@@ -72,7 +72,10 @@ if(this.loginForm.valid){
         },err=>{
           this.toastr.error(err.error.message||"Accesso respinto.")
         })
-        }else{
+        }else if(this.loginForm.controls['email'].value=='raffaelecaravetta13@gmail.com'){
+        this.toastr.error("Devi accedere dall'area riservata")
+        }
+        else{
           this.toastr.error("Completa il form.")
 
         }

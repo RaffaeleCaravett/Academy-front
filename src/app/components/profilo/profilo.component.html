@@ -1,6 +1,7 @@
 <div class="container text-center text-white">
   <div class="row">
     <div class="col-md-12">
+      <p class="text-end" *ngIf="user" (click)="logout()"><button class="btn text-white fs-5">Logout</button></p>
         <h1>La tua dashboard</h1>
     </div>
   <div class="col-md-12 p-2 darker rounded">

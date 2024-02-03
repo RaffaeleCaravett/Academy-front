@@ -6,19 +6,20 @@
     </div>
    <div class="col-md-12">
      <form [formGroup]="search">
-    <input type="text" class="form-control my-2 w-50 m-auto" formControlName="search">
-    <button class="m-4 px-5 py-3">Search</button>
+    <input type="text" class="form-control my-2 w-50 m-auto" formControlName="search" (input)="searchCorsiByNome()">
+    <button class="m-4 px-5 py-3" (click)="searchCorsiByNome()">Search</button>
     </form>
    </div>
    <div class="p-2 row text-center" *ngIf="carrello&&carrello.corso.length>0">
 <div class="col-md-8"></div>
     <div class="col-md-4 p-2">
   <div class="darker rounded p-1">
-    <p class="text-end text-white" (click)="svuotaCarrello(carrello.id)">Svuota</p>
+    <p class="text-end text-white p-2" (click)="svuotaCarrello(carrello.id)">Svuota</p>
 <h2>Carrello</h2>
 <div *ngFor="let c of carrello.corso">
 <p>{{c.nome}}  <span class="p-1 text-end fs-5" (click)="removeFromCarrello(c)">❌</span></p>
 </div>
+<p class="text-end text-white p-2" (click)="acquistaCarrello()">Acquista</p>
   </div>
 </div>
    </div>

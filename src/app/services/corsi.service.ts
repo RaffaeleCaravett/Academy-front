@@ -52,4 +52,7 @@ return this.http.post(environment.API_URL+this.preferiti,preferiti)
   saveAcquisto(acquisto:{}){
     return this.http.post(environment.API_URL+this.acquisti,acquisto)
   }
+  getCoursesByNome(nome:string){
+    return this.http.get(environment.API_URL+this.courses+`/nome/${nome}`)
+  }
 }
