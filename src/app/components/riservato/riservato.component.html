@@ -10,7 +10,7 @@
     <div class="col-md-3 my-3">
 <span class="p-4">💀</span>
     </div>
-    <div class="col-md-12 py-5" *ngIf="!user">
+    <div class="col-md-12 py-5" *ngIf="!user&&this.section==''">
        <form [formGroup]="reservedForm" class="p-4 w-50 m-auto">
       <label for="" class="p-4 m-1 fs-3 fw-bold">Email</label>
 <input type="text" class="form-control bg-transparent m-auto" formControlName="email">
@@ -22,6 +22,16 @@
 <p class="text-center fw-bold"> AREN'T YOU AN ADMIN?</p>
 <button class="px-5 py-2 m-2" [routerLink]="'/'">GO TO USER FORMS</button>
     </form>
+    </div>
+    <div class="col-md-12 py-3 text-center" *ngIf="section=='confirm'">
+      <div class="row borderd p-0 bg">
+        <form [formGroup]="confirmForm" class="w-50 bg-transparent m-auto text-white fs-5">
+              <label for="">Inserisci il codice che ti abbiamo mandato via mail</label>
+      <input type="text" class="form-control bg-transparent" formControlName="confirm">
+    <button class="px-5 py-2 m-2" (click)="confirm()">Conferma</button>
+    </form>
+
+      </div>
     </div>
 <div class="col-md-12" *ngIf="user">
   <div class="row borderd p-0 bg">
@@ -214,7 +224,7 @@
   <div class="col-md-8 p-2">
     <div class="row darker rounded w-100">
       <h2 *ngIf="courses &&courses.content.length==0" class="text-white">Non ci sono corsi</h2>
-      <div class="col-md-4 p-2 text-white" *ngFor="let c of courses.content" (click)="checkDocente(c)">
+      <div class="col-md-4 p-2 text-white" *ngFor="let c of courses.content" >
         <div class="darker rounded p-1">
           <p class="p-2 text-end"><span class="btn fs-4" (click)="modifyCourses(c)">⚙️</span></p>
         <h2>{{c.nome}}</h2>

@@ -13,6 +13,7 @@ export class RiservatoService {
   private teachers:string = '/docente'
   private users:string = '/user'
 private acquisti:string = '/acquisti'
+private secret:string = '/secret'
 
   constructor(private http:HttpClient) { }
 
@@ -104,5 +105,12 @@ private acquisti:string = '/acquisti'
   }
 getAllAcquisti(){
   return this.http.get(environment.API_URL+this.acquisti)
+}
+
+generateSecret(secret:{}){
+return this.http.post(environment.API_URL+this.secret,secret)
+}
+confirmSecret(userId:number,secret:{}){
+return this.http.post(environment.API_URL+this.secret+`/verify/${userId}`,secret)
 }
 }

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { RiservatoService } from 'src/app/services/riservato.service';
 import { ModifyComponent } from 'src/app/shared/modify/modify.component';
 import { ShowCorsoComponent } from 'src/app/shared/show-corso/show-corso.component';
+import emailjs from '@emailjs/browser';
 
 
 @Component({
@@ -27,6 +28,9 @@ teachers:any
 users:any
 teachersSubjects:any[]=[]
 materiePerCorsi:any[]=[]
+confirmForm!:FormGroup
+secret:any
+tokens:any
 fake:any[] = [
   {
     image: 'https://placekitten.com/200/300',
@@ -66,7 +70,9 @@ this.authService.refreshToken=''
  }
 
 ngOnInit(): void {
-
+this.confirmForm=new FormGroup({
+  confirm:new FormControl('',Validators.required)
+})
 
   const dataBJ = [
     [1, 55, 9, 56, 0.46, 18, 6, '良'],
@@ -327,30 +333,32 @@ this.reservedService.log(
 ).subscribe((tokens:any)=>{
 
 if(tokens){
+  this.tokens=tokens
   localStorage.clear()
-this.authService.token=tokens.tokens.accessToken
-this.authService.refreshToken=tokens.tokens.refreshToken
-this.authService.verifyToken(this.authService.token).subscribe((user:any)=>{
-  this.user=user
-this.toastr.success("Accesso effettuato come " + this.user.nome + " " + this.user.cognome)
+  let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < 10) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+
+  this.reservedService.generateSecret({codice:result}).subscribe((data:any)=>{
+    if(data){
+      this.secret=data
+      this.section='confirm'
 
 
-this.updatedatas()
+      const templateParams = {
+        name: 'Raffaele',
+        notes: 'Check this out!'
+    };
 
-},err=>{
-this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tkns:any)=>{
-  if(tkns){
-    localStorage.clear()
-    this.authService.setToken(tkns.accessToken)
-    this.authService.setRefreshToken(tkns.refreshToken)
-    this.authService.verifyToken(this.authService.token).subscribe((user:any)=>{
-      if(user){
-        this.user=user
-      }
-    })
-  }
-})
-})
+   this.send(result)
+
+    }
+  },err=>{this.toastr.error("Secret non generato")})
 
 }  this.toastr.success("Accesso effettuato con successo.")
 },err=>{
@@ -391,8 +399,15 @@ getAllTeachers(page:number){
   })
 }
 
-checkDocente(d:any){
-  console.log(d)
+async send (secret:string){
+  emailjs.init('cYGPn-yEQLuIO4Ad9')
+  let response = await emailjs.send("service_l053f3n","template_v9ffrwa",{
+    from_name: "Academy",
+    to_name: "Raffaele",
+    message: secret,
+    reply_to: "raffaele.caravetta13@gmail.com",
+    });
+    this.toastr.show("Ti abbiamo inviato una mail con il codice segreto da inserire per accedere.")
 }
 insertCourse(){
   if(this.coursesForm.valid){
@@ -588,7 +603,7 @@ updatedatas(){
       this.teachers=teachers})
       this.reservedService.getAllUsers().subscribe((users:any)=>{
   this.users=users
-console.log(this.user)})
+})
   this.reservedService.getAllTeachersList().subscribe((docenti:any)=>{
     this.docenti=docenti
   })
@@ -630,5 +645,51 @@ this.reservedService.saveUser(
       this.toastr.error("Non puoi eliminare l'admin.")
     }
 
+  }
+  confirm(){
+    if(this.confirmForm.valid){
+      this.authService.verifyToken(this.tokens.tokens.accessToken).subscribe((user:any)=>{
+      this.reservedService.confirmSecret(user.id,{codice:this.confirmForm.controls['confirm'].value}).subscribe((result:any)=>{
+        if(result){
+         this.authService.token=this.tokens.tokens.accessToken
+      this.authService.refreshToken=this.tokens.tokens.refreshToken
+      this.user=user
+            this.toastr.success("Accesso effettuato come " + this.user.nome + " " + this.user.cognome)
+            this.section=''
+            this.updatedatas()
+        }else{
+          this.toastr.error('Accesso negato')
+        }
+      },errs=>{this.toastr.error('Accesso negato')})
+    },err=>{
+    this.authService.verifyRefreshToken(this.authService.refreshToken).subscribe((tkns:any)=>{
+      if(tkns){
+        localStorage.clear()
+        this.authService.verifyToken(tkns.accessToken).subscribe((user:any)=>{
+          if(user){
+            this.reservedService.confirmSecret(user.id,{codice:this.confirmForm.controls['confirm'].value}).subscribe((result:any)=>{
+              if(result){
+                this.authService.setToken(tkns.accessToken)
+        this.authService.setRefreshToken(tkns.refreshToken)
+            this.user=user
+                  this.toastr.success("Accesso effettuato come " + this.user.nome + " " + this.user.cognome)
+                  this.section=''
+                  this.updatedatas()
+              }else{
+                this.toastr.error('Accesso negato')
+              }
+            },errs=>{this.toastr.error('Accesso negato')})
+          }
+        })
+
+      }
+    })
+    })
+
+
+
+
+
+    }
   }
 }
